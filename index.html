@@ -1312,11 +1312,24 @@ function submitForm(){
   if(!message){alert(lang==='en'?'Tell us about your goals.':'Kerro tavoitteistasi.');return;}
   if(checked.length===0){alert(lang==='en'?'Select at least one service.':'Valitse vähintään yksi palvelu.');return;}
   var interests=Array.from(checked).map(function(i){return i.value;}).join(', ');
-  var subject=encodeURIComponent('Uusi yhteydenotto — '+name);
-  var body=encodeURIComponent('Nimi: '+name+'\nYritys: '+company+'\nSähköposti: '+email+'\nPuhelin: '+phone+'\nPalvelut: '+interests+'\n\n'+message);
-  window.location.href='mailto:verkkopantteri@gmail.com?subject='+subject+'&body='+body;
-  document.getElementById('contactForm').style.display='none';
-  document.getElementById('formSuccess').style.display='block';
+  var btn=document.getElementById('btnSubmit');
+  if(btn){btn.disabled=true;btn.textContent=lang==='en'?'Sending...':'Lähetetään...';}
+  fetch('https://verkkopantteri-backend.vercel.app/api/contact',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:name,company:company,email:email,phone:phone,interests:interests,message:message})
+  }).then(function(r){
+    if(r.status===429){
+      alert(lang==='en'?'Too many requests. Try again in 24 hours.':'Liian monta pyyntöä. Yritä uudelleen 24 tunnin kuluttua.');
+      if(btn){btn.disabled=false;btn.textContent=lang==='en'?'Start growing':'Aloita kasvu';}
+      return;
+    }
+    document.getElementById('contactForm').style.display='none';
+    document.getElementById('formSuccess').style.display='block';
+  }).catch(function(){
+    alert(lang==='en'?'Something went wrong. Please try again.':'Jokin meni pieleen. Yritä uudelleen.');
+    if(btn){btn.disabled=false;btn.textContent=lang==='en'?'Start growing':'Aloita kasvu';}
+  });
 }
 </script>
 
@@ -1427,11 +1440,26 @@ function sendModalForm(){
   var company=document.getElementById('modal-company').value.trim();
   var checks=document.querySelectorAll('#calModal input[type=checkbox]:checked');
   var interests=Array.from(checks).map(function(c){return c.value;});
-  var subject=encodeURIComponent('Uusi varaus – '+(name||'Nimetön'));
-  var body=encodeURIComponent('Nimi: '+(name||'-')+'\nYritys: '+(company||'-')+'\nKiinnostuksen kohteet: '+(interests.length?interests.join(', '):'-')+'\n\nVarattu aika: '+(window._calBooking||'-'));
-  window.location.href='mailto:verkkopantteri@gmail.com?subject='+subject+'&body='+body;
-  document.getElementById('modal-form-wrap').style.display='none';
-  document.getElementById('modal-success').style.display='block';
+  var lang=localStorage.getItem('vp_lang')||'fi';
+  if(!name){alert(lang==='en'?'Please enter your name.':'Täytä nimi.');return;}
+  var btn=document.querySelector('.modal-send');
+  if(btn){btn.disabled=true;btn.textContent=lang==='en'?'Sending...':'Lähetetään...';}
+  fetch('https://verkkopantteri-backend.vercel.app/api/bookings',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:name,company:company,interests:interests,bookingTime:window._calBooking||'—'})
+  }).then(function(r){
+    if(r.status===429){
+      alert(lang==='en'?'Too many requests. Try again in 24 hours.':'Liian monta pyyntöä. Yritä uudelleen 24 tunnin kuluttua.');
+      if(btn){btn.disabled=false;btn.textContent=lang==='en'?'Send':'Lähetä';}
+      return;
+    }
+    document.getElementById('modal-form-wrap').style.display='none';
+    document.getElementById('modal-success').style.display='block';
+  }).catch(function(){
+    alert(lang==='en'?'Something went wrong. Please try again.':'Jokin meni pieleen. Yritä uudelleen.');
+    if(btn){btn.disabled=false;btn.textContent=lang==='en'?'Send':'Lähetä';}
+  });
 }
 </script>
 
