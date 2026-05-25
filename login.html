@@ -239,7 +239,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:'Ra
 <div class="header">
   <div class="header-logo">TIA <span>// Verkkopantteri Portaali</span></div>
   <div class="header-right">
-    <a class="header-link" href="tia.html" id="portalLink">◈ Portaali</a>
+    <a class="header-link" href="http://79.76.53.218:7842/TIA-Search.html" id="portalLink">◈ Portaali</a>
     <div class="header-status">
       <div class="status-dot"></div>
       <span>SECURE</span> &nbsp;·&nbsp; <span id="hclock">--:--:--</span>
@@ -436,7 +436,7 @@ function showLoading(username, role){
       clearInterval(interval);
       statusEl.textContent = 'Järjestelmä valmis!';
       setTimeout(()=>{
-        const dest = 'tia.html?role=' + encodeURIComponent(role) + '&user=' + encodeURIComponent(username.toLowerCase().trim());
+        const dest = 'http://79.76.53.218:7842/TIA-Search.html?role=' + encodeURIComponent(role) + '&user=' + encodeURIComponent(username.toLowerCase().trim());
         window.location.href = dest;
       }, 600);
     }
@@ -449,13 +449,13 @@ function showLoading(username, role){
     try{
       const d = JSON.parse(auth);
       if(Date.now() - d.ts < 8 * 3600 * 1000){
-        window.location.href = 'tia.html?role=' + encodeURIComponent(d.role) + '&user=' + encodeURIComponent(d.username);
+        window.location.href = 'http://79.76.53.218:7842/TIA-Search.html?role=' + encodeURIComponent(d.role) + '&user=' + encodeURIComponent(d.username);
       }
     }catch(e){}
   }
 })();
 
-document.getElementById('portalLink').href = 'tia.html';
+document.getElementById('portalLink').href = 'http://79.76.53.218:7842/TIA-Search.html';
 </script>
 </body>
 </html>
