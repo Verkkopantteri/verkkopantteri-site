@@ -492,6 +492,7 @@
     gap:16px;
   }
   .eyebrow{justify-content:center;}
+  .eyebrow::before{display:none;}
 
   .cta-desktop{display:none !important;}
 
@@ -519,7 +520,7 @@
     align-items:center;
     flex-wrap:wrap;
     gap:16px;
-    padding:0 16px 8px;
+    padding:15px 16px 15px;
     width:100%;
   }
 
@@ -538,6 +539,8 @@
     display:flex;
     flex-wrap:nowrap;
     overflow:hidden;
+    opacity:1 !important;
+    animation:none !important;
   }
   .services-row.ticker-mode .pill{
     flex-shrink:0;
@@ -551,6 +554,8 @@
   .about-stat{padding:24px 12px;box-sizing:border-box;text-align:center;}
   .about-stat-num{font-size:1.8rem;word-break:break-word;}
   .about-cta-mobile-wrap{display:flex !important;justify-content:center;margin-top:8px;}
+  .interest-intro::before{content:none;}
+  .interest-intro{padding-left:0;}
   .form-submit-wrap{flex-direction:column;align-items:center;gap:12px;text-align:center;}
   .form-note{white-space:nowrap;}
   .form-grid{grid-template-columns:1fr;}
@@ -984,11 +989,15 @@
       style.textContent = '@keyframes pillScroll{0%{transform:translateX(0)}100%{transform:translateX(-' + totalW + 'px)}}';
       document.head.appendChild(style);
       // Animate the TRACK (inside the overflow:hidden row), not the row itself
+      track.style.cssText = track.style.cssText + 'will-change:transform;';
       track.style.animation = 'pillScroll ' + (pills.length * 2.0) + 's linear infinite';
+      track.style.animationFillMode = 'none';
     });
   }
 
-  window.addEventListener('load', initPillTicker);
+  window.addEventListener('load', function() {
+    setTimeout(initPillTicker, 1700);
+  });
   window.addEventListener('resize', function() {
     var row = document.getElementById('servicesRow');
     if (row) resetPillTicker(row);
