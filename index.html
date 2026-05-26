@@ -984,7 +984,7 @@ function initSparkEngine(canvasId, btnEl, COLORS){
       const {x,y}=this._pos();
       ctx.save(); ctx.globalAlpha=this.life; ctx.shadowColor=this.color;
       ctx.shadowBlur=10; ctx.fillStyle=this.color; ctx.beginPath();
-      ctx.arc(x,y,this.size,0,Math.PI*2); ctx.fill(); ctx.restore();
+      ctx.arc(x,y,Math.max(0,this.size),0,Math.PI*2); ctx.fill(); ctx.restore();
     }
     dead(){ return this.life<=0; }
   }
