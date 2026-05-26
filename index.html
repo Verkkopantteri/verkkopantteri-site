@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html> 
 <html lang="fi">
 <head>
@@ -277,6 +279,7 @@
   /* HERO LOGO / CALENDAR */
   .hero-logo-wrap{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 1s 0.6s ease forwards;height:100%;min-height:340px;}
   .logo-frame{position:relative;width:100%;max-width:480px;display:flex;align-items:center;justify-content:center;}
+  .logo-frame-cal{max-width:480px;height:460px;width:100%;}
   .logo-frame::before,.logo-frame::after,.logo-corner-br,.logo-corner-bl{content:'';position:absolute;width:48px;height:48px;border-color:var(--gold);border-style:solid;opacity:0.5;}
   .logo-frame::before{top:0;left:0;border-width:2px 0 0 2px;}
   .logo-frame::after{top:0;right:0;border-width:2px 2px 0 0;}
@@ -510,6 +513,12 @@
     aspect-ratio:unset !important;
     overflow:visible !important;
   }
+  .hero-logo-wrap{opacity:1 !important;animation:none !important;min-height:unset;}
+  .eyebrow{opacity:1 !important;animation:none !important;}
+  .hero-heading{opacity:1 !important;animation:none !important;}
+  .hero-heading .line2{animation:shimmer 6s 2.5s infinite !important;}
+  .hero-sub{opacity:1 !important;animation:none !important;}
+  .logo-frame-cal{height:auto !important;}
   #cal-root{height:auto !important;overflow:visible !important;}
 
   .cta-mobile{
@@ -521,6 +530,8 @@
     gap:16px;
     padding:15px 16px 15px;
     width:100%;
+    opacity:1 !important;
+    animation:none !important;
   }
 
   .pill-mobile-only{display:flex;}
@@ -564,6 +575,7 @@
   .interest-grid{grid-template-columns:1fr 1fr;}
   .contact-wrap{padding:32px 20px;}
   footer{flex-direction:column;gap:12px;text-align:center;padding:24px 20px;}
+  .clients-ticker{opacity:1 !important;animation:none !important;}
   section[id]{padding:60px 20px!important;}
 }
 </style>
@@ -645,7 +657,7 @@
     </div>
 
     <div class="hero-logo-wrap" style="align-items:center;">
-      <div class="logo-frame" style="max-width:480px;height:460px;width:100%;aspect-ratio:unset;">
+      <div class="logo-frame logo-frame-cal">
         <div class="logo-corner-br"></div>
         <div class="logo-corner-bl"></div>
         <div style="width:100%;height:100%;padding:16px;display:flex;flex-direction:column;overflow:hidden;">
@@ -675,7 +687,7 @@
     </div>
 
     <!-- Mobile-only CTA: below calendar -->
-    <div class="cta-group cta-mobile" style="display:none;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 0.7s 1.1s ease forwards;">
+    <div class="cta-group cta-mobile" style="display:none;justify-content:center;flex-wrap:wrap;">
       <div class="btn-scratch-wrap">
         <canvas class="btn-spark-canvas" id="heroSparkCanvasMobile" aria-hidden="true"></canvas>
         <a class="btn-primary" href="#yhteystiedot">Vapauta peto</a>
