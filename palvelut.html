@@ -770,6 +770,17 @@ function toggleNav(){
   links.classList.toggle('open');
 }
 document.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navHamburger').classList.remove('open');document.getElementById('navLinks').classList.remove('open');});});
+
+// Mobile: show portal link inside hamburger menu on mobile
+(function(){
+  function applyMobileLayout(){
+    var isMobile = window.innerWidth <= 900;
+    var portalMobile = document.querySelector('.nav-portal-mobile');
+    if(portalMobile) portalMobile.style.display = isMobile ? 'list-item' : 'none';
+  }
+  applyMobileLayout();
+  window.addEventListener('resize', applyMobileLayout);
+})();
 </script>
 </body>
 </html>
