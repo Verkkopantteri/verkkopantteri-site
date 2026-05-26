@@ -1,3 +1,4 @@
+
 <!DOCTYPE html> 
 <html lang="fi">
 <head>
@@ -298,6 +299,10 @@
   .client-logo-item:hover{opacity:1;filter:grayscale(0) brightness(1);}
   .client-logo-item img{height:100%;width:auto;max-width:200px;object-fit:contain;}
   .client-logo-placeholder{font-family:'Share Tech Mono',monospace;font-size:0.8rem;letter-spacing:0.2em;color:rgba(229,181,98,0.7);text-transform:uppercase;border:1px solid rgba(229,181,98,0.2);padding:8px 22px;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+  @media(max-width:900px){
+    .clients-ticker-track{animation-duration:9s;}
+    .client-logo-item{height:56px;margin:0 28px;}
+  }
 
   /* SECTIONS */
   .section-divider{position:relative;z-index:10;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(229,181,98,0.15) 30%,rgba(229,181,98,0.15) 70%,transparent);}
@@ -918,51 +923,75 @@
 
 // Services row: infinite scroll ticker on mobile
 (function() {
+  function resetPillTicker(row) {
+    row.classList.remove('ticker-mode');
+    row.style.animation = '';
+    if (row._tickerTrack) {
+      // Move original pills back to row before removing track
+      var origWrap = row._tickerTrack._origWrap;
+      if (origWrap) {
+        Array.from(origWrap.querySelectorAll('.pill')).forEach(function(p) {
+          row.insertBefore(p, row._tickerTrack);
+        });
+      }
+      row._tickerTrack.remove();
+      row._tickerTrack = null;
+    }
+    var style = document.getElementById('pill-ticker-style');
+    if (style) style.remove();
+  }
+
   function initPillTicker() {
     var row = document.getElementById('servicesRow');
     if (!row) return;
     var isMobile = window.innerWidth <= 900;
     if (!isMobile) {
-      // Reset desktop
-      row.classList.remove('ticker-mode');
-      if (row._tickerClone) { row._tickerClone.remove(); row._tickerClone = null; }
-      row.style.animation = '';
+      resetPillTicker(row);
       return;
     }
     if (row.classList.contains('ticker-mode')) return;
     row.classList.add('ticker-mode');
-    // Clone pills for seamless loop
+
     var pills = Array.from(row.querySelectorAll('.pill'));
-    var clone = document.createElement('div');
-    clone.style.cssText = 'display:flex;flex-shrink:0;gap:6px;padding-left:6px;';
-    pills.forEach(function(p) {
-      clone.appendChild(p.cloneNode(true));
-    });
-    row._tickerClone = clone;
-    row.appendChild(clone);
-    // Wrap original pills in a container
+
+    // Wrap originals
     var origWrap = document.createElement('div');
     origWrap.style.cssText = 'display:flex;flex-shrink:0;gap:6px;';
     pills.forEach(function(p) { origWrap.appendChild(p); });
-    row.insertBefore(origWrap, clone);
-    // Animate
-    var totalW = origWrap.scrollWidth + 6;
-    var style = document.createElement('style');
-    style.id = 'pill-ticker-style';
-    style.textContent = '@keyframes pillScroll{0%{transform:translateX(0)}100%{transform:translateX(-' + totalW + 'px)}}';
-    document.head.appendChild(style);
-    row.style.animation = 'pillScroll ' + (pills.length * 2.2) + 's linear infinite';
+
+    // Clone for seamless loop
+    var clone = document.createElement('div');
+    clone.style.cssText = 'display:flex;flex-shrink:0;gap:6px;padding-left:6px;';
+    pills.forEach(function(p) { clone.appendChild(p.cloneNode(true)); });
+
+    // Track holds both — THIS is what we animate, not the row
+    var track = document.createElement('div');
+    track.style.cssText = 'display:flex;flex-shrink:0;';
+    track.appendChild(origWrap);
+    track.appendChild(clone);
+    track._origWrap = origWrap;
+
+    row.appendChild(track);
+    row._tickerTrack = track;
+
+    // Measure after paint so scrollWidth is accurate
+    requestAnimationFrame(function() {
+      var totalW = origWrap.scrollWidth + 6;
+      var oldStyle = document.getElementById('pill-ticker-style');
+      if (oldStyle) oldStyle.remove();
+      var style = document.createElement('style');
+      style.id = 'pill-ticker-style';
+      style.textContent = '@keyframes pillScroll{0%{transform:translateX(0)}100%{transform:translateX(-' + totalW + 'px)}}';
+      document.head.appendChild(style);
+      // Animate the TRACK (inside the overflow:hidden row), not the row itself
+      track.style.animation = 'pillScroll ' + (pills.length * 2.0) + 's linear infinite';
+    });
   }
+
   window.addEventListener('load', initPillTicker);
   window.addEventListener('resize', function() {
     var row = document.getElementById('servicesRow');
-    if (row) {
-      row.classList.remove('ticker-mode');
-      if (row._tickerClone) { row._tickerClone.remove(); row._tickerClone = null; }
-      row.style.animation = '';
-      var style = document.getElementById('pill-ticker-style');
-      if (style) style.remove();
-    }
+    if (row) resetPillTicker(row);
     initPillTicker();
   });
 })();
