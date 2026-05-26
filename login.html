@@ -24,19 +24,23 @@
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;background:var(--black);color:var(--white);font-family:'Rajdhani',sans-serif;overflow:hidden;}
-.grid-bg{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(229,181,98,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(229,181,98,0.028) 1px,transparent 1px);background-size:56px 56px;animation:gridDrift 28s linear infinite;pointer-events:none;}
+
+/* Hero video */
+.hero-video{position:fixed;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;opacity:0.3;pointer-events:none;}
+
+.grid-bg{position:fixed;inset:0;z-index:1;background-image:linear-gradient(rgba(229,181,98,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(229,181,98,0.028) 1px,transparent 1px);background-size:56px 56px;animation:gridDrift 28s linear infinite;pointer-events:none;}
 @keyframes gridDrift{0%{transform:translateY(0)}100%{transform:translateY(56px)}}
-.vignette{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.96) 100%);pointer-events:none;}
-.scanlines{position:fixed;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);}
-.corner{position:fixed;z-index:1;pointer-events:none;}
+.vignette{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.96) 100%);pointer-events:none;}
+.scanlines{position:fixed;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);}
+.corner{position:fixed;z-index:2;pointer-events:none;}
 .corner-tl{top:0;left:0;border-top:2px solid rgba(229,181,98,0.4);border-left:2px solid rgba(229,181,98,0.4);width:80px;height:80px;}
 .corner-tr{top:0;right:0;border-top:2px solid rgba(229,181,98,0.4);border-right:2px solid rgba(229,181,98,0.4);width:80px;height:80px;}
 .corner-bl{bottom:0;left:0;border-bottom:2px solid rgba(229,181,98,0.4);border-left:2px solid rgba(229,181,98,0.4);width:80px;height:80px;}
 .corner-br{bottom:0;right:0;border-bottom:2px solid rgba(229,181,98,0.4);border-right:2px solid rgba(229,181,98,0.4);width:80px;height:80px;}
-.hline{position:fixed;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(229,181,98,0.15),transparent);animation:hscan 8s linear infinite;z-index:1;pointer-events:none;}
+.hline{position:fixed;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(229,181,98,0.15),transparent);animation:hscan 8s linear infinite;z-index:2;pointer-events:none;}
 @keyframes hscan{0%{top:-2px;opacity:0}5%{opacity:1}95%{opacity:0.3}100%{top:100vh;opacity:0}}
-.page{position:relative;z-index:2;display:flex;flex-direction:column;height:100vh;align-items:center;justify-content:center;}
-.header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:52px;border-bottom:1px solid var(--gold-border);background:rgba(0,0,0,0.92);backdrop-filter:blur(24px);}
+.page{position:relative;z-index:3;display:flex;flex-direction:column;height:100vh;align-items:center;justify-content:center;}
+.header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:52px;border-bottom:1px solid var(--gold-border);background:rgba(0,0,0,0.7);backdrop-filter:blur(24px);}
 .header-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 20px rgba(229,181,98,0.4);}
 .header-logo span{color:rgba(255,255,255,0.4);font-size:0.65rem;letter-spacing:0.25em;margin-left:10px;}
 .header-right{display:flex;align-items:center;gap:18px;}
@@ -46,12 +50,27 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:'Ra
 .login-outer{display:flex;flex-direction:column;align-items:center;gap:28px;animation:loginAppear 0.8s ease forwards;}
 @keyframes loginAppear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .login-emblem{display:flex;flex-direction:column;align-items:center;gap:10px;}
-.login-logo-wrap{width:80px;height:80px;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);background:rgba(229,181,98,0.06);border:1px solid rgba(229,181,98,0.3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-.login-logo-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(229,181,98,0.08),transparent);}
-.login-logo-img{width:48px;height:48px;object-fit:contain;position:relative;z-index:1;filter:drop-shadow(0 0 8px rgba(229,181,98,0.5));}
-.login-logo-txt{font-family:'Orbitron',monospace;font-weight:900;font-size:1.6rem;letter-spacing:0.3em;color:var(--gold);text-shadow:0 0 30px rgba(229,181,98,0.5),0 0 60px rgba(229,181,98,0.2);}
+
+.tia-login-avatar{
+  width:80px;height:80px;
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+  background:rgba(229,181,98,0.06);
+  border:1px solid rgba(229,181,98,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',monospace;
+  font-weight:900;
+  font-size:1.5rem;
+  letter-spacing:0.15em;
+  color:var(--gold);
+  text-shadow:0 0 20px rgba(229,181,98,0.6),0 0 40px rgba(229,181,98,0.3);
+  animation:avatarPulse 3s ease-in-out infinite;
+}
+@keyframes avatarPulse{
+  0%,100%{box-shadow:0 0 0 1px rgba(229,181,98,0.2),0 0 20px rgba(229,181,98,0.1);}
+  50%{box-shadow:0 0 0 1px rgba(229,181,98,0.4),0 0 30px rgba(229,181,98,0.25);}
+}
 .login-subtitle{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.3em;color:rgba(229,181,98,0.4);text-transform:uppercase;}
-.login-box{position:relative;width:420px;background:rgba(8,8,8,0.96);border:1px solid rgba(229,181,98,0.2);padding:36px 40px;}
+.login-box{position:relative;width:420px;background:rgba(8,8,8,0.85);border:1px solid rgba(229,181,98,0.2);padding:36px 40px;backdrop-filter:blur(12px);}
 .login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
 .login-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(229,181,98,0.3),transparent);}
 .login-title{font-family:'Orbitron',monospace;font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);margin-bottom:28px;}
@@ -71,7 +90,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:'Ra
 .loading-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;gap:32px;backdrop-filter:blur(8px);}
 .loading-overlay.show{display:flex;animation:fadeIn 0.4s ease;}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.loading-logo-img{width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(229,181,98,0.7));animation:logoPulse 1.5s ease-in-out infinite;}
+.loading-tia-avatar{width:80px;height:80px;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);background:rgba(229,181,98,0.06);border:1px solid rgba(229,181,98,0.3);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-weight:900;font-size:1.5rem;color:var(--gold);text-shadow:0 0 20px rgba(229,181,98,0.6);animation:logoPulse 1.5s ease-in-out infinite;}
 @keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 16px rgba(229,181,98,0.7));transform:scale(1)}50%{filter:drop-shadow(0 0 28px rgba(229,181,98,1));transform:scale(1.04)}}
 .loading-content{display:flex;flex-direction:column;align-items:center;gap:20px;}
 .loading-rawr{font-family:'Orbitron',monospace;font-weight:900;font-size:1.1rem;letter-spacing:0.35em;color:rgba(255,255,255,0.9);text-transform:uppercase;}
@@ -90,6 +109,11 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:'Ra
 </style>
 </head>
 <body>
+
+<video class="hero-video" autoplay muted loop playsinline>
+  <source src="videos/hero_video.mp4" type="video/mp4">
+</video>
+
 <div class="grid-bg"></div>
 <div class="vignette"></div>
 <div class="scanlines"></div>
@@ -112,11 +136,8 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:'Ra
 <div class="page">
   <div class="login-outer">
     <div class="login-emblem">
-      <div class="login-logo-wrap">
-        <img class="login-logo-img" src="icon_vp_32.png" alt="VP" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Orbitron,monospace;font-weight:900;font-size:1.4rem;color:var(--gold);\'>VP</span>'">
-      </div>
-      <div class="login-logo-txt">TIA</div>
-      <div class="login-subtitle">// Technical Intelligence Assistant · Verkkopantteri</div>
+      <div class="tia-login-avatar">TIA</div>
+      <div class="login-subtitle">Technical Intelligence Assistant · Verkkopantteri</div>
     </div>
 
     <div class="login-box">
@@ -137,7 +158,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:'Ra
 </div>
 
 <div class="loading-overlay" id="loadingOverlay">
-  <img class="loading-logo-img" src="icon_vp_32.png" alt="VP" onerror="this.style.display='none'">
+  <div class="loading-tia-avatar">TIA</div>
   <div class="loading-content">
     <div class="loading-rawr">Rawr</div>
     <div class="loading-sub">Saalistusaika!</div>
@@ -182,79 +203,42 @@ async function doLogin(){
   const password=document.getElementById('passInput').value;
   const err=document.getElementById('loginError');
   const btn=document.getElementById('loginBtn');
-
   if(!username||!password){showError('// Täytä kaikki kentät');return;}
-
-  loginInProgress=true;
-  btn.disabled=true;
-  err.classList.remove('show');
-
+  loginInProgress=true;btn.disabled=true;err.classList.remove('show');
   try{
-    const resp=await fetch(BACKEND+'/api/auth',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({username,password})
-    });
+    const resp=await fetch(BACKEND+'/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
     const data=await resp.json();
-
     if(!resp.ok||!data.ok){
-      loginInProgress=false;
-      btn.disabled=false;
+      loginInProgress=false;btn.disabled=false;
       showError('// Väärä käyttäjätunnus tai salasana');
       document.getElementById('userInput').classList.add('error');
       document.getElementById('passInput').classList.add('error');
       document.getElementById('passInput').value='';
-      setTimeout(()=>{
-        document.getElementById('userInput').classList.remove('error');
-        document.getElementById('passInput').classList.remove('error');
-      },1200);
+      setTimeout(()=>{document.getElementById('userInput').classList.remove('error');document.getElementById('passInput').classList.remove('error');},1200);
       return;
     }
-
-    // Tallennetaan token ja tia_url
-    sessionStorage.setItem('tia_auth',JSON.stringify({
-      username:username.toLowerCase().trim(),
-      role:data.role,
-      token:data.token,
-      tia_url:data.tia_url,
-      ts:Date.now()
-    }));
-
-    showLoading(username, data.role, data.tia_url, data.token);
-
-  }catch(e){
-    loginInProgress=false;
-    btn.disabled=false;
-    showError('// Yhteysvirhe — yritä uudelleen');
-  }
+    sessionStorage.setItem('tia_auth',JSON.stringify({username:username.toLowerCase().trim(),role:data.role,token:data.token,tia_url:data.tia_url,ts:Date.now()}));
+    showLoading(username,data.role,data.tia_url,data.token);
+  }catch(e){loginInProgress=false;btn.disabled=false;showError('// Yhteysvirhe — yritä uudelleen');}
 }
 
-function showError(msg){
-  const err=document.getElementById('loginError');
-  err.textContent=msg;
-  err.classList.add('show');
-}
+function showError(msg){const err=document.getElementById('loginError');err.textContent=msg;err.classList.add('show');}
 
-function showLoading(username, role, tia_url, token){
+function showLoading(username,role,tia_url,token){
   document.getElementById('loadingOverlay').classList.add('show');
   let pct=0,statusIdx=0;
   const fill=document.getElementById('progressFill');
   const pctLabel=document.getElementById('pctLabel');
   const statusEl=document.getElementById('loadingStatus');
   statusEl.textContent=STATUSES[0];
-
   const interval=setInterval(()=>{
-    pct+=Math.random()*4+2;
-    if(pct>100)pct=100;
-    fill.style.width=pct+'%';
-    pctLabel.textContent=Math.floor(pct)+'%';
+    pct+=Math.random()*4+2;if(pct>100)pct=100;
+    fill.style.width=pct+'%';pctLabel.textContent=Math.floor(pct)+'%';
     const si=Math.floor((pct/100)*(STATUSES.length-1));
     if(si!==statusIdx&&si<STATUSES.length){statusIdx=si;statusEl.textContent=STATUSES[statusIdx];}
     if(pct>=100){
-      clearInterval(interval);
-      statusEl.textContent='Järjestelmä valmis!';
+      clearInterval(interval);statusEl.textContent='Järjestelmä valmis!';
       setTimeout(()=>{
-        // Lisätään token URL-parametrina jotta TIA-server voi tarkistaa sen
         const dest=tia_url+'/TIA-Search.html?token='+encodeURIComponent(token)+'&role='+encodeURIComponent(role)+'&user='+encodeURIComponent(username.toLowerCase().trim());
         window.location.href=dest;
       },600);
@@ -262,7 +246,6 @@ function showLoading(username, role, tia_url, token){
   },60);
 }
 
-// Auto-redirect jos sessio voimassa
 (function(){
   const auth=sessionStorage.getItem('tia_auth');
   if(auth){
