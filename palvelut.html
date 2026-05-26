@@ -156,27 +156,33 @@
   .nav-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1.05rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);text-decoration:none;}
   .nav-logo span{color:var(--gold);}
   .nav-links{display:flex;gap:40px;list-style:none;}
-  .nav-links a{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color 0.25s;}
+  .nav-links a{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,204,214,0.75);text-decoration:none;transition:color 0.25s;}
   .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+  /* Portal link in hamburger keeps its gold color */
+  .nav-links a.portal-link{color:var(--gold);}
+  .nav-links a.portal-link:hover{color:#f0c878;}
   .nav-right{display:flex;align-items:center;gap:20px;}
   .lang-switcher{display:flex;align-items:center;gap:4px;}
-  .lang-btn{background:none;border:1px solid transparent;cursor:pointer;padding:3px 5px;border-radius:2px;line-height:1;transition:border-color 0.2s,transform 0.15s;opacity:0.5;display:flex;align-items:center;justify-content:center;}
+  .lang-btn{background:none;border:1px solid transparent;cursor:pointer;padding:3px 5px;border-radius:2px;line-height:1;transition:border-color 0.2s,transform 0.15s;opacity:0.6;display:flex;align-items:center;justify-content:center;}
   .lang-btn img{width:22px;height:15px;object-fit:cover;display:block;}
   .lang-btn:hover{opacity:1;transform:scale(1.08);}
   .lang-btn.active{opacity:1;border-color:rgba(229,181,98,0.4);}
-  .nav-portal{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:color 0.25s;display:inline-flex;align-items:center;gap:6px;}
-  .nav-portal:hover{color:#f0c878;}
-  .nav-cta{font-family:'Orbitron',monospace;font-weight:700;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--black);background:var(--gold);border:none;padding:10px 26px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background 0.2s,transform 0.2s;text-decoration:none;display:inline-block;}
-  .nav-cta:hover{background:#f0c878;transform:translateY(-1px);}
+  /* hamburger moved after lang switcher */
   .nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
   .nav-hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:all 0.3s;}
   .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
   .nav-hamburger.open span:nth-child(2){opacity:0;}
   .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .nav-portal{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:color 0.25s;display:inline-flex;align-items:center;gap:6px;}
+  .nav-portal:hover{color:#f0c878;}
+  .nav-cta{font-family:'Orbitron',monospace;font-weight:700;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--black);background:var(--gold);border:none;padding:10px 26px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background 0.2s,transform 0.2s;text-decoration:none;display:inline-block;}
+  .nav-cta:hover{background:#f0c878;transform:translateY(-1px);}
   :root{--black:#000000;--gold:#E5B562;--gold-deep:#b8893a;--gold-glow:rgba(229,181,98,0.15);--gold-dim:rgba(229,181,98,0.06);--white:#ffffff;--gray:#8a8f99;--dark:#0a0a0a;}
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{background:var(--black);color:var(--white);font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
+  /* FIX: overflow-x hidden on html+body prevents horizontal scroll */
+  html,body{overflow-x:hidden;}
+  body{background:var(--black);color:var(--white);font-family:'Rajdhani',sans-serif;}
 
   .grid-bg{position:fixed;inset:0;z-index:1;background-image:linear-gradient(rgba(229,181,98,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(229,181,98,0.03) 1px,transparent 1px);background-size:60px 60px;animation:gridDrift 24s linear infinite;pointer-events:none;}
   @keyframes gridDrift{0%{transform:translateY(0)}100%{transform:translateY(60px)}}
@@ -251,15 +257,30 @@
   @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
   @media(max-width:900px){
-    nav{padding:16px 20px;}
+    nav{padding:0 16px;height:60px;}
+    .nav-portal-desktop{display:none;}
+    .nav-cta-desktop{display:none;}
     .nav-hamburger{display:flex;}
-    .nav-links{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(0,0,0,0.98);border-bottom:1px solid rgba(229,181,98,0.15);flex-direction:column;gap:0;padding:16px 0;z-index:299;}
+    .nav-links{
+      display:none;
+      position:fixed;
+      top:60px;left:0;right:0;
+      background:rgba(0,0,0,0.98);
+      border-bottom:1px solid rgba(229,181,98,0.15);
+      flex-direction:column;gap:0;
+      padding:8px 0 16px;
+      z-index:299;
+    }
     .nav-links.open{display:flex;}
     .nav-links li a{display:block;padding:14px 24px;font-size:0.9rem;border-bottom:1px solid rgba(229,181,98,0.06);}
+    .nav-links li.nav-portal-mobile{display:list-item;}
+    .nav-right{gap:8px;}
     .page-hero{padding:120px 20px 60px;}
     .service-section{padding:40px 20px;}
     .service-block{flex-direction:column!important;}
-    .service-visual{min-height:200px;border-left:none!important;border-right:none!important;border-top:1px solid rgba(229,181,98,0.08);min-width:unset;flex:none;}
+    .service-visual{min-height:160px;border-left:none!important;border-right:none!important;border-top:1px solid rgba(229,181,98,0.08);min-width:unset;flex:none;}
+    .service-icon-large{font-size:3rem;}
+    .service-visual-bg-num{font-size:7rem;}
     .service-content{padding:36px 24px;}
     .bottom-cta{padding:60px 20px;}
     footer{flex-direction:column;gap:12px;text-align:center;padding:24px 20px;}
@@ -289,21 +310,25 @@
 
 <nav aria-label="Päänavigaatio">
   <a href="index.html" class="nav-logo">Verkko<span>Pantteri</span></a>
-  <button class="nav-hamburger" id="navHamburger" aria-label="Avaa valikko" onclick="toggleNav()"><span></span><span></span><span></span></button>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html#meista">Meistä</a></li>
     <li><a href="index.html#prosessi">Prosessi</a></li>
     <li><a href="palvelut.html" class="active">Palvelut</a></li>
     <li><a href="kasvulaskuri.html">Kasvulaskuri</a></li>
     <li><a href="tyopaikka.html">Töihin</a></li>
+    <!-- Portal link in mobile hamburger menu, hidden on desktop via CSS -->
+    <li class="nav-portal-mobile" style="display:none;"><a href="https://portaali.verkkopantteri.fi" class="portal-link" target="_blank">Portaali</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-switcher">
       <button class="lang-btn active" id="lang-fi" onclick="setLang('fi')" title="Suomi"><img src="images/flag-fin.avif" alt="Suomi" width="22" height="15" loading="lazy"></button>
       <button class="lang-btn" id="lang-en" onclick="setLang('en')" title="English"><img src="images/flag-en.avif" alt="English" width="22" height="15" loading="lazy"></button>
     </div>
-    <a class="nav-portal" href="https://portaali.verkkopantteri.fi" target="_blank">Portaali</a>
-    <a href="index.html#yhteystiedot" class="nav-cta">Ota yhteyttä</a>
+    <!-- Hamburger AFTER lang switcher -->
+    <button class="nav-hamburger" id="navHamburger" aria-label="Avaa valikko" onclick="toggleNav()"><span></span><span></span><span></span></button>
+    <!-- Desktop-only links -->
+    <a class="nav-portal nav-portal-desktop" href="https://portaali.verkkopantteri.fi" target="_blank">Portaali</a>
+    <a href="index.html#yhteystiedot" class="nav-cta nav-cta-desktop">Ota yhteyttä</a>
   </div>
 </nav>
 
@@ -699,9 +724,10 @@ function setLang(lang) {
   document.getElementById('lang-en').classList.toggle('active', lang === 'en');
   var T = VP_T[lang], el, els;
 
-  document.querySelectorAll('.nav-links li a').forEach(function(a,i){ if(T.navLinks[i]) a.textContent = T.navLinks[i]; });
-  el = document.querySelector('.nav-portal'); if(el) el.textContent = T.portal;
-  el = document.querySelector('.nav-cta'); if(el) el.textContent = T.cta;
+  document.querySelectorAll('.nav-links li:not(.nav-portal-mobile) a:not(.portal-link)').forEach(function(a,i){ if(T.navLinks[i]) a.textContent = T.navLinks[i]; });
+  // Update portal links
+  document.querySelectorAll('.nav-portal, .portal-link').forEach(function(el){ el.textContent = T.portal; });
+  el = document.querySelector('.nav-cta-desktop'); if(el) el.textContent = T.cta;
 
   el = document.querySelector('.page-eyebrow'); if(el) el.innerHTML = T.pageEye;
   el = document.querySelector('.page-heading'); if(el) el.innerHTML = T.pageH;
