@@ -923,6 +923,7 @@ function initSparkEngine(canvasId, btnEl, COLORS){
         this.history.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));
         ctx.lineTo(this.x,this.y); ctx.stroke(); ctx.restore();
       }
+      if(this.life<=0) return;
       ctx.save(); ctx.globalAlpha=this.life;
       ctx.shadowColor=this.color; ctx.shadowBlur=8;
       ctx.fillStyle=this.color; ctx.beginPath();
