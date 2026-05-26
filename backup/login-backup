@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIA — Portaali // Kirjautuminen</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #000000;
+  --dark: #080808;
+  --dark2: #0d0d0d;
+  --gold: #E5B562;
+  --gold-dim: rgba(229,181,98,0.08);
+  --gold-glow: rgba(229,181,98,0.18);
+  --gold-border: rgba(229,181,98,0.2);
+  --white: #ffffff;
+  --gray: #8a8f99;
+  --gray2: #555a63;
+  --red: #ff4455;
+  --green: #00ffaa;
+  --blue: #0af;
+  --accent: #00c8ff;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;background:var(--black);color:var(--white);font-family:'Rajdhani',sans-serif;overflow:hidden;}
+
+/* Hero video */
+.hero-video{position:fixed;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;opacity:0.3;pointer-events:none;}
+
+.grid-bg{position:fixed;inset:0;z-index:1;background-image:linear-gradient(rgba(229,181,98,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(229,181,98,0.028) 1px,transparent 1px);background-size:56px 56px;animation:gridDrift 28s linear infinite;pointer-events:none;}
+@keyframes gridDrift{0%{transform:translateY(0)}100%{transform:translateY(56px)}}
+.vignette{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.96) 100%);pointer-events:none;}
+.scanlines{position:fixed;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);}
+.corner{position:fixed;z-index:2;pointer-events:none;}
+.corner-tl{top:0;left:0;border-top:2px solid rgba(229,181,98,0.4);border-left:2px solid rgba(229,181,98,0.4);width:80px;height:80px;}
+.corner-tr{top:0;right:0;border-top:2px solid rgba(229,181,98,0.4);border-right:2px solid rgba(229,181,98,0.4);width:80px;height:80px;}
+.corner-bl{bottom:0;left:0;border-bottom:2px solid rgba(229,181,98,0.4);border-left:2px solid rgba(229,181,98,0.4);width:80px;height:80px;}
+.corner-br{bottom:0;right:0;border-bottom:2px solid rgba(229,181,98,0.4);border-right:2px solid rgba(229,181,98,0.4);width:80px;height:80px;}
+.hline{position:fixed;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(229,181,98,0.15),transparent);animation:hscan 8s linear infinite;z-index:2;pointer-events:none;}
+@keyframes hscan{0%{top:-2px;opacity:0}5%{opacity:1}95%{opacity:0.3}100%{top:100vh;opacity:0}}
+.page{position:relative;z-index:3;display:flex;flex-direction:column;height:100vh;align-items:center;justify-content:center;}
+.header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:52px;border-bottom:1px solid var(--gold-border);background:rgba(0,0,0,0.7);backdrop-filter:blur(24px);}
+.header-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 20px rgba(229,181,98,0.4);}
+.header-logo span{color:rgba(255,255,255,0.4);font-size:0.65rem;letter-spacing:0.25em;margin-left:10px;}
+.header-right{display:flex;align-items:center;gap:18px;}
+.header-status{display:flex;align-items:center;gap:8px;font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;color:rgba(255,255,255,0.3);text-transform:uppercase;}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2.4s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.login-outer{display:flex;flex-direction:column;align-items:center;gap:28px;animation:loginAppear 0.8s ease forwards;}
+@keyframes loginAppear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.login-emblem{display:flex;flex-direction:column;align-items:center;gap:10px;}
+
+.tia-login-avatar{
+  width:80px;height:80px;
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+  background:rgba(229,181,98,0.06);
+  border:1px solid rgba(229,181,98,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',monospace;
+  font-weight:900;
+  font-size:1.5rem;
+  letter-spacing:0.15em;
+  color:var(--gold);
+  text-shadow:0 0 20px rgba(229,181,98,0.6),0 0 40px rgba(229,181,98,0.3);
+  animation:avatarPulse 3s ease-in-out infinite;
+}
+@keyframes avatarPulse{
+  0%,100%{box-shadow:0 0 0 1px rgba(229,181,98,0.2),0 0 20px rgba(229,181,98,0.1);}
+  50%{box-shadow:0 0 0 1px rgba(229,181,98,0.4),0 0 30px rgba(229,181,98,0.25);}
+}
+.login-subtitle{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.3em;color:rgba(229,181,98,0.4);text-transform:uppercase;}
+.login-box{position:relative;width:420px;background:rgba(8,8,8,0.85);border:1px solid rgba(229,181,98,0.2);padding:36px 40px;backdrop-filter:blur(12px);}
+.login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.login-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(229,181,98,0.3),transparent);}
+.login-title{font-family:'Orbitron',monospace;font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);margin-bottom:28px;}
+.field-group{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
+.field-label{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(229,181,98,0.6);}
+.field-input{background:rgba(229,181,98,0.04);border:1px solid rgba(229,181,98,0.15);color:var(--white);font-family:'Share Tech Mono',monospace;font-size:0.82rem;padding:12px 16px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;letter-spacing:0.08em;width:100%;}
+.field-input:focus{border-color:rgba(229,181,98,0.5);box-shadow:0 0 0 2px rgba(229,181,98,0.06);}
+.field-input::placeholder{color:rgba(255,255,255,0.15);}
+.field-input.error{border-color:rgba(255,68,85,0.5);box-shadow:0 0 0 2px rgba(255,68,85,0.08);}
+.login-error{display:none;font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;color:var(--red);text-transform:uppercase;margin-bottom:14px;padding:8px 12px;border:1px solid rgba(255,68,85,0.2);background:rgba(255,68,85,0.06);}
+.login-error.show{display:block;animation:errIn 0.3s ease;}
+@keyframes errIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
+.login-btn{width:100%;font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:#000;background:var(--gold);border:none;padding:14px 20px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background 0.2s,transform 0.15s,box-shadow 0.2s;margin-top:8px;}
+.login-btn:hover{background:#f0c878;transform:translateY(-1px);box-shadow:0 4px 20px rgba(229,181,98,0.3);}
+.login-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
+.login-footer{font-family:'Share Tech Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;color:rgba(255,255,255,0.1);text-align:center;margin-top:4px;}
+.loading-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;gap:32px;backdrop-filter:blur(8px);}
+.loading-overlay.show{display:flex;animation:fadeIn 0.4s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.loading-tia-avatar{width:80px;height:80px;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);background:rgba(229,181,98,0.06);border:1px solid rgba(229,181,98,0.3);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-weight:900;font-size:1.5rem;color:var(--gold);text-shadow:0 0 20px rgba(229,181,98,0.6);animation:logoPulse 1.5s ease-in-out infinite;}
+@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 16px rgba(229,181,98,0.7));transform:scale(1)}50%{filter:drop-shadow(0 0 28px rgba(229,181,98,1));transform:scale(1.04)}}
+.loading-content{display:flex;flex-direction:column;align-items:center;gap:20px;}
+.loading-rawr{font-family:'Orbitron',monospace;font-weight:900;font-size:1.1rem;letter-spacing:0.35em;color:rgba(255,255,255,0.9);text-transform:uppercase;}
+.loading-sub{font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.28em;color:rgba(229,181,98,0.6);text-transform:uppercase;}
+.progress-wrap{width:340px;display:flex;flex-direction:column;gap:10px;}
+.progress-label{display:flex;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;color:rgba(229,181,98,0.5);text-transform:uppercase;}
+.progress-track{height:3px;background:rgba(229,181,98,0.1);border:1px solid rgba(229,181,98,0.15);overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,rgba(229,181,98,0.6),var(--gold));width:0%;transition:width 0.1s linear;box-shadow:0 0 12px rgba(229,181,98,0.6);}
+.loading-status{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;color:rgba(255,255,255,0.3);text-transform:uppercase;height:16px;}
+.dec-dots{display:flex;gap:6px;align-items:center;}
+.dec-dot{width:4px;height:4px;border-radius:50%;background:rgba(229,181,98,0.3);}
+.dec-dot.active{background:var(--gold);box-shadow:0 0 6px rgba(229,181,98,0.8);animation:dotBlink 0.8s ease-in-out infinite;}
+.dec-dot:nth-child(2){animation-delay:0.15s;}
+.dec-dot:nth-child(3){animation-delay:0.3s;}
+@keyframes dotBlink{0%,100%{opacity:0.4}50%{opacity:1}}
+</style>
+</head>
+<body>
+
+<video class="hero-video" autoplay muted loop playsinline>
+  <source src="videos/hero_video.mp4" type="video/mp4">
+</video>
+
+<div class="grid-bg"></div>
+<div class="vignette"></div>
+<div class="scanlines"></div>
+<div class="hline"></div>
+<div class="corner corner-tl"></div>
+<div class="corner corner-tr"></div>
+<div class="corner corner-bl"></div>
+<div class="corner corner-br"></div>
+
+<div class="header">
+  <div class="header-logo">TIA <span>// Verkkopantteri Portaali</span></div>
+  <div class="header-right">
+    <div class="header-status">
+      <div class="status-dot"></div>
+      <span>SECURE</span> &nbsp;·&nbsp; <span id="hclock">--:--:--</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="login-outer">
+    <div class="login-emblem">
+      <div class="tia-login-avatar">TIA</div>
+      <div class="login-subtitle">Technical Intelligence Assistant · Verkkopantteri</div>
+    </div>
+
+    <div class="login-box">
+      <div class="login-title">Kirjaudu sisään</div>
+      <div class="field-group">
+        <div class="field-label">▸ Käyttäjätunnus</div>
+        <input class="field-input" id="userInput" type="text" placeholder="käyttäjätunnus" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="field-group">
+        <div class="field-label">▸ Salasana</div>
+        <input class="field-input" id="passInput" type="password" placeholder="••••••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="login-error" id="loginError">// Väärä käyttäjätunnus tai salasana</div>
+      <button class="login-btn" id="loginBtn" onclick="doLogin()">▶ Kirjaudu // Access System</button>
+      <div class="login-footer" style="margin-top:20px;">TIA-SYSTEM · Verkkopantteri · Luottamuksellinen</div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-tia-avatar">TIA</div>
+  <div class="loading-content">
+    <div class="loading-rawr">Rawr</div>
+    <div class="loading-sub">Saalistusaika!</div>
+    <div class="dec-dots">
+      <div class="dec-dot active"></div>
+      <div class="dec-dot active"></div>
+      <div class="dec-dot active"></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Ladataan TIA...</span>
+        <span id="pctLabel">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+    <div class="loading-status" id="loadingStatus">Yhdistetään järjestelmään...</div>
+  </div>
+</div>
+
+<script>
+const BACKEND = 'https://verkkopantteri-backend.vercel.app';
+
+function updateClock(){document.getElementById('hclock').textContent=new Date().toTimeString().slice(0,8);}
+setInterval(updateClock,1000);updateClock();
+
+const STATUSES=[
+  'Yhdistetään järjestelmään...',
+  'Haetaan käyttäjäprofiili...',
+  'Ladataan TIA-moduulit...',
+  'Tarkistetaan oikeudet...',
+  'Valmistelaan käyttöliittymä...',
+  'Järjestelmä valmis!'
+];
+
+let loginInProgress=false;
+
+async function doLogin(){
+  if(loginInProgress)return;
+  const username=document.getElementById('userInput').value.trim();
+  const password=document.getElementById('passInput').value;
+  const err=document.getElementById('loginError');
+  const btn=document.getElementById('loginBtn');
+  if(!username||!password){showError('// Täytä kaikki kentät');return;}
+  loginInProgress=true;btn.disabled=true;err.classList.remove('show');
+  try{
+    const resp=await fetch(BACKEND+'/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
+    const data=await resp.json();
+    if(!resp.ok||!data.ok){
+      loginInProgress=false;btn.disabled=false;
+      showError('// Väärä käyttäjätunnus tai salasana');
+      document.getElementById('userInput').classList.add('error');
+      document.getElementById('passInput').classList.add('error');
+      document.getElementById('passInput').value='';
+      setTimeout(()=>{document.getElementById('userInput').classList.remove('error');document.getElementById('passInput').classList.remove('error');},1200);
+      return;
+    }
+    sessionStorage.setItem('tia_auth',JSON.stringify({username:username.toLowerCase().trim(),role:data.role,token:data.token,tia_url:data.tia_url,ts:Date.now()}));
+    showLoading(username,data.role,data.tia_url,data.token);
+  }catch(e){loginInProgress=false;btn.disabled=false;showError('// Yhteysvirhe — yritä uudelleen');}
+}
+
+function showError(msg){const err=document.getElementById('loginError');err.textContent=msg;err.classList.add('show');}
+
+function showLoading(username,role,tia_url,token){
+  document.getElementById('loadingOverlay').classList.add('show');
+  let pct=0,statusIdx=0;
+  const fill=document.getElementById('progressFill');
+  const pctLabel=document.getElementById('pctLabel');
+  const statusEl=document.getElementById('loadingStatus');
+  statusEl.textContent=STATUSES[0];
+  const interval=setInterval(()=>{
+    pct+=Math.random()*4+2;if(pct>100)pct=100;
+    fill.style.width=pct+'%';pctLabel.textContent=Math.floor(pct)+'%';
+    const si=Math.floor((pct/100)*(STATUSES.length-1));
+    if(si!==statusIdx&&si<STATUSES.length){statusIdx=si;statusEl.textContent=STATUSES[statusIdx];}
+    if(pct>=100){
+      clearInterval(interval);statusEl.textContent='Järjestelmä valmis!';
+      setTimeout(()=>{
+        const dest=tia_url+'/TIA-Search.html?token='+encodeURIComponent(token)+'&role='+encodeURIComponent(role)+'&user='+encodeURIComponent(username.toLowerCase().trim());
+        window.location.href=dest;
+      },600);
+    }
+  },60);
+}
+
+(function(){
+  const auth=sessionStorage.getItem('tia_auth');
+  if(auth){
+    try{
+      const d=JSON.parse(auth);
+      if(d.token&&d.tia_url&&Date.now()-d.ts<8*3600*1000){
+        const dest=d.tia_url+'/TIA-Search.html?token='+encodeURIComponent(d.token)+'&role='+encodeURIComponent(d.role)+'&user='+encodeURIComponent(d.username);
+        window.location.href=dest;
+      }
+    }catch(e){}
+  }
+})();
+</script>
+</body>
+</html>
