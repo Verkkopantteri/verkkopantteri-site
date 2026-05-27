@@ -143,6 +143,7 @@
   .job-card:nth-child(1){animation-delay:0.15s;}
   .job-card:nth-child(2){animation-delay:0.3s;}
   .job-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(229,181,98,0.2),transparent);opacity:0;transition:opacity 0.25s;}
+  .job-card{cursor:pointer;}
   .job-card:hover{background:rgba(229,181,98,0.05);border-color:rgba(229,181,98,0.28);}
   .job-card:hover::before{opacity:1;}
 
@@ -549,6 +550,27 @@ var VP_T = {
   }
 };
 
+
+// Koko job-card klikattava
+// Avoin hakemus -kortti klikattava
+var openApp = document.querySelector('.open-app-inner');
+var openLink = openApp && openApp.querySelector('.btn-open-app');
+if(openApp && openLink){
+  openApp.style.cursor = 'pointer';
+  openApp.addEventListener('click', function(e){
+    if(e.target.closest('.btn-open-app')) return;
+    window.location.href = openLink.href;
+  });
+}
+
+document.querySelectorAll('.job-card').forEach(function(card){
+  var link = card.querySelector('.job-cta');
+  if(!link) return;
+  card.addEventListener('click', function(e){
+    if(e.target.closest('.job-cta')) return;
+    window.open(link.href, link.target || '_self');
+  });
+});
 function toggleNav(){
   var ham=document.getElementById('navHamburger');
   var links=document.getElementById('navLinks');
