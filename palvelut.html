@@ -736,11 +736,11 @@ function setLang(lang) {
   document.querySelectorAll('.service-section').forEach(function(sec, i) {
     if(!T.svcBlocks[i]) return;
     var b = T.svcBlocks[i];
-    var eye = sec.querySelector('.svc-eyebrow'); if(eye) eye.textContent = b.eye;
-    var h = sec.querySelector('.svc-heading'); if(h) h.innerHTML = b.h;
-    var body = sec.querySelector('.svc-body'); if(body) body.textContent = b.body;
+    var eye = sec.querySelector('.svc-eyebrow, .service-num'); if(eye) eye.textContent = b.eye;
+    var h = sec.querySelector('.svc-heading, .svc-title'); if(h) h.innerHTML = b.h;
+    var body = sec.querySelector('.svc-body, .svc-lead'); if(body) body.textContent = b.body;
     var cta = sec.querySelector('.svc-cta'); if(cta) { var arrow = cta.querySelector('.svc-cta-arrow'); cta.innerHTML = b.cta; if(arrow) cta.appendChild(document.createTextNode(' ')); if(arrow) cta.appendChild(arrow); else cta.innerHTML = b.cta + ' <span class="svc-cta-arrow">→</span>'; }
-    var items = sec.querySelectorAll('.svc-list li');
+    var items = sec.querySelectorAll('.svc-list li, .svc-features li');
     items.forEach(function(li, j){ if(b.items[j]) li.textContent = b.items[j]; });
   });
 
