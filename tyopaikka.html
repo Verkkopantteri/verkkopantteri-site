@@ -100,6 +100,8 @@
   .nav-portal:hover{color:#f0c878;}
   .nav-cta{font-family:'Orbitron',monospace;font-weight:700;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--black);background:var(--gold);border:none;padding:10px 26px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background 0.2s,transform 0.2s;text-decoration:none;display:inline-block;}
   .nav-cta:hover{background:#f0c878;transform:translateY(-1px);}
+  .nav-links a.nav-automation-link{color:rgba(120,160,255,0.85);}
+  .nav-links a.nav-automation-link:hover{color:#8ab0ff;}
   :root{--black:#000000;--gold:#E5B562;--gold-deep:#b8893a;--gold-glow:rgba(229,181,98,0.15);--gold-dim:rgba(229,181,98,0.06);--white:#ffffff;--gray:#8a8f99;--dark:#0a0a0a;}
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -243,6 +245,7 @@
     <li><a href="palvelut.html">Palvelut</a></li>
     <li><a href="kasvulaskuri.html">Kasvulaskuri</a></li>
     <li><a href="tyopaikka.html" class="active">Töihin</a></li>
+    <li><a href="automation.html" class="nav-automation-link">Automaatio</a></li>
     <!-- Portal link in mobile hamburger menu, hidden on desktop via CSS -->
     <li class="nav-portal-mobile" style="display:none;"><a href="login.html" class="portal-link" target="_blank">Portaali</a></li>
   </ul>
@@ -343,15 +346,15 @@
 (function injectCookieCSS(){
   var s = document.createElement('style');
   s.textContent = `
-  #vp-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9000;background:rgba(5,5,5,0.97);border-top:1px solid rgba(229,181,98,0.22);backdrop-filter:blur(24px);padding:20px 52px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;transform:translateY(110%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);}
+  #vp-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9000;background:#E5B562;border-top:3px solid #b8893a;backdrop-filter:blur(24px);padding:20px 52px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;transform:translateY(110%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);box-shadow:0 -4px 32px rgba(229,181,98,0.4);}
   #vp-cookie-banner.visible{transform:translateY(0);}
-  .vp-cookie-text{font-family:'Rajdhani',sans-serif;font-size:0.92rem;color:rgba(255,255,255,0.65);line-height:1.6;max-width:640px;}
-  .vp-cookie-text strong{color:#fff;}
+  .vp-cookie-text{font-family:'Rajdhani',sans-serif;font-size:0.92rem;color:#000;line-height:1.6;max-width:640px;}
+  .vp-cookie-text strong{color:#000;}
   .vp-cookie-btns{display:flex;gap:10px;flex-shrink:0;}
-  .vp-cookie-accept{font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#000;background:#E5B562;border:none;padding:11px 28px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background 0.2s,transform 0.2s;}
-  .vp-cookie-accept:hover{background:#f0c878;transform:translateY(-1px);}
-  .vp-cookie-settings{font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#8a8f99;background:none;border:1px solid rgba(229,181,98,0.2);padding:11px 28px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:border-color 0.2s,color 0.2s;}
-  .vp-cookie-settings:hover{border-color:rgba(229,181,98,0.5);color:#fff;}
+  .vp-cookie-accept{font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#E5B562;background:#000;border:none;padding:11px 28px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background 0.2s,transform 0.2s;}
+  .vp-cookie-accept:hover{background:#1a1a1a;transform:translateY(-1px);}
+  .vp-cookie-settings{font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#000;background:none;border:1px solid rgba(0,0,0,0.3);padding:11px 28px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:border-color 0.2s,color 0.2s,background 0.2s;}
+  .vp-cookie-settings:hover{border-color:#000;background:rgba(0,0,0,0.08);color:#000;}
   @media(max-width:900px){#vp-cookie-banner{padding:16px 20px;flex-direction:column;align-items:flex-start;}.vp-cookie-btns{width:100%;}}
 
   #vp-cookie-popup{display:none;position:fixed;inset:0;z-index:9100;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;}
@@ -384,8 +387,8 @@
 function vpBuildCookieBanner(){
   var lang = localStorage.getItem('vp_lang')||'fi';
   var T = {
-    fi:{text:'<strong>Käytämme evästeitä.</strong> Tämä sivusto käyttää evästeitä parantaakseen käyttökokemustasi.',accept:'HYVÄKSY',settings:'MUUTA ASETUKSIA',popupTitle:'Evästeasetukset',popupDesc:'Voit valita, mitkä analytiikkatyökalut ovat käytössä. Välttämättömät toiminnalliset evästeet ovat aina päällä.',gaName:'Google Analytics',gaHint:'Kävijätilastot ja liikenneanalyysi',clarityName:'Microsoft Clarity',clarityHint:'Käytettävyys ja heatmap-analyysi',save:'TALLENNA',reject:'HYLKÄÄ'},
-    en:{text:'<strong>We use cookies.</strong> This site uses cookies to improve your experience.',accept:'ACCEPT',settings:'CHANGE SETTINGS',popupTitle:'Cookie Settings',popupDesc:'Choose which analytics tools are active. Essential functional cookies are always on.',gaName:'Google Analytics',gaHint:'Visitor stats and traffic analysis',clarityName:'Microsoft Clarity',clarityHint:'Usability and heatmap analysis',save:'SAVE',reject:'DECLINE'}
+    fi:{text:'Yksityisyytesi on meille tärkeää. Käytämme evästeitä sivuston toiminnan, kehittämisen ja analytiikan tueksi. Lisätietoja <a href="tietosuoja.html" style="color:#000;font-weight:700;text-decoration:underline;text-underline-offset:2px;">tietosuojaselosteessa</a>.',accept:'HYVÄKSY',settings:'MUUTA ASETUKSIA',popupTitle:'Evästeasetukset',popupDesc:'Voit valita, mitkä analytiikkatyökalut ovat käytössä. Välttämättömät toiminnalliset evästeet ovat aina päällä.',gaName:'Google Analytics',gaHint:'Kävijätilastot ja liikenneanalyysi',clarityName:'Microsoft Clarity',clarityHint:'Käytettävyys ja heatmap-analyysi',save:'TALLENNA',reject:'HYLKÄÄ'},
+    en:{text:'Your privacy matters to us. We use cookies to support site functionality, development and analytics. Read more in our <a href="tietosuoja.html" style="color:#000;font-weight:700;text-decoration:underline;text-underline-offset:2px;">privacy policy</a>.',accept:'ACCEPT',settings:'CHANGE SETTINGS',popupTitle:'Cookie Settings',popupDesc:'Choose which analytics tools are active. Essential functional cookies are always on.',gaName:'Google Analytics',gaHint:'Visitor stats and traffic analysis',clarityName:'Microsoft Clarity',clarityHint:'Usability and heatmap analysis',save:'SAVE',reject:'DECLINE'}
   };
   window._vpCookieT = T;
 
@@ -428,11 +431,22 @@ function vpBuildCookieBanner(){
 function vpOpenPopup(){ document.getElementById('vp-cookie-popup').classList.add('open'); }
 function vpClosePopup(){ document.getElementById('vp-cookie-popup').classList.remove('open'); }
 
+
+function vpLoadClarity(){
+  if(window._clarityLoaded) return;
+  window._clarityLoaded=true;
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window,document,'clarity','script','wwcwfq22fw');
+}
 function vpCookieSave(ga,cl){
   localStorage.setItem('vp_consent_ga', ga?'1':'0');
   localStorage.setItem('vp_consent_cl', cl?'1':'0');
   localStorage.setItem('vp_consent_set','1');
   if(!ga) window['ga-disable-G-LJTN2CTE78']=true;
+  if(cl) vpLoadClarity();
   var b=document.getElementById('vp-cookie-banner');
   if(b) b.classList.remove('visible');
   vpClosePopup();
@@ -448,6 +462,7 @@ function vpCookieInit(){
     },900);
   } else {
     if(localStorage.getItem('vp_consent_ga')==='0') window['ga-disable-G-LJTN2CTE78']=true;
+    if(localStorage.getItem('vp_consent_cl')==='1') vpLoadClarity();
   }
 }
 
@@ -512,7 +527,7 @@ if(document.readyState==='loading'){
 <script>
 var VP_T = {
   fi: {
-    navLinks: ['Meistä','Prosessi','Palvelut','Kasvulaskuri','Töihin'],
+    navLinks: ['Meistä','Prosessi','Palvelut','Kasvulaskuri','Töihin','Automaatio'],
     portal: 'Portaali', cta: 'Ota yhteyttä',
     pageEye: '// Töihin Verkkopantterille',
     pageH: 'Tule osaksi<br>petojen<br><span class="gold">joukkuetta.</span>',
@@ -529,7 +544,7 @@ var VP_T = {
     footerText: '© 2025 Verkkopantteri — Digimarkkinoinnin peto'
   },
   en: {
-    navLinks: ['About','Process','Services','Growth Calculator','Join Us'],
+    navLinks: ['About','Process','Services','Growth Calculator','Join Us','Automation'],
     portal: 'Portal', cta: 'Contact',
     pageEye: '// Join Verkkopantteri',
     pageH: 'Become part<br>of the<br><span class="gold">pack.</span>',
@@ -632,5 +647,183 @@ function setLang(lang) {
   setLang(lang);
 })();
 </script>
+<!-- AUTOMATION POPUP -->
+<style>
+  #vp-wrap {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: 9999;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: drop-shadow(0 8px 36px rgba(30,50,140,0.38));
+    transform: translateY(-50%) translateX(calc(100% + 10px));
+  }
+  #vp-wrap.visible {
+    transform: translateY(-50%) translateX(0);
+  }
+  #vp-bubble {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 10px 8px 11px 13px;
+    width: 132px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-right: 0;
+    position: relative;
+    align-self: center;
+    opacity: 0;
+    transform: scale(0.85) translateX(8px);
+    transform-origin: right center;
+    transition: opacity 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.18s,
+                transform 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.18s;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.13);
+  }
+  #vp-wrap.visible #vp-bubble {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+  #vp-bubble-bot-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-right: 20px;
+  }
+  #vp-bubble-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a3aaa 0%, #3B5EC6 60%, #6a8ef0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(59,94,198,0.45);
+  }
+  #vp-bubble-avatar svg {
+    width: 13px;
+    height: 13px;
+  }
+  #vp-bubble-bot-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #3B5EC6;
+  }
+  #vp-bubble-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 16px;
+    height: 16px;
+    background: #3B5EC6;
+    border: none;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    line-height: 1;
+    padding: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  }
+  #vp-bubble-close:hover {
+    background: #2a4ab5;
+  }
+  #vp-bubble-text {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #0a0a0a;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+  }
+  #vp-bubble-cta {
+    font-family: 'Orbitron', monospace;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #3B5EC6;
+    cursor: pointer;
+  }
+</style>
+
+<div id="vp-wrap">
+  <div id="vp-bubble">
+    <button id="vp-bubble-close" onclick="event.stopPropagation();vpHide();">&#x2715;</button>
+    <div id="vp-bubble-bot-row">
+      <div id="vp-bubble-avatar" onclick="location.href='automation.html'" style="cursor:pointer;">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="16" height="11" rx="3" fill="white" opacity="0.95"/>
+          <rect x="9" y="4" width="6" height="5" rx="1.5" fill="white" opacity="0.95"/>
+          <circle cx="9" cy="13" r="1.5" fill="#3B5EC6"/>
+          <circle cx="15" cy="13" r="1.5" fill="#3B5EC6"/>
+          <line x1="1.5" y1="11" x2="4" y2="11" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+          <line x1="20" y1="11" x2="22.5" y2="11" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+        </svg>
+      </div>
+      <div id="vp-bubble-bot-label">Auto-Bot</div>
+    </div>
+    <div id="vp-bubble-text" onclick="location.href='automation.html'">Teetkö vielä asioita käsin, joita voisit automatisoida?</div>
+    <div id="vp-bubble-cta" onclick="location.href='automation.html'">Selvitä &#8594;</div>
+  </div>
+</div>
+
+<script>
+  var VP_BUBBLE_T = {
+    fi: { text: 'Teetkö vielä asioita käsin, joita voisit automatisoida?', cta: 'Selvitä →' },
+    en: { text: 'Still doing things manually that could be automated?', cta: 'Find out →' }
+  };
+
+  function vpUpdateBubbleLang(lang) {
+    var t = VP_BUBBLE_T[lang] || VP_BUBBLE_T['fi'];
+    var el = document.getElementById('vp-bubble-text');
+    var cta = document.getElementById('vp-bubble-cta');
+    if (el) el.textContent = t.text;
+    if (cta) cta.textContent = t.cta;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var lang = localStorage.getItem('vp_lang') || 'fi';
+    vpUpdateBubbleLang(lang);
+  });
+
+  function vpDismiss() {
+    sessionStorage.setItem('vp_auto_dismissed', '1');
+    var el = document.getElementById('vp-wrap');
+    el.style.transition = 'transform 0.35s cubic-bezier(0.4,0,1,1)';
+    el.classList.remove('visible');
+  }
+
+  function vpHide() { vpDismiss(); }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var bubbleText = document.getElementById('vp-bubble-text');
+    var bubbleCta = document.getElementById('vp-bubble-cta');
+    var bubbleAvatar = document.getElementById('vp-bubble-avatar');
+    if(bubbleText) bubbleText.addEventListener('click', function() { sessionStorage.setItem('vp_auto_dismissed', '1'); });
+    if(bubbleCta) bubbleCta.addEventListener('click', function() { sessionStorage.setItem('vp_auto_dismissed', '1'); });
+    if(bubbleAvatar) bubbleAvatar.addEventListener('click', function() { sessionStorage.setItem('vp_auto_dismissed', '1'); });
+
+    if (!sessionStorage.getItem('vp_auto_dismissed')) {
+      setTimeout(function() {
+        var wrap = document.getElementById('vp-wrap');
+        if(wrap) wrap.classList.add('visible');
+      }, 8000);
+    }
+  });
+  // AUTOMATION ENDS
+</script>
+
 </body>
 </html>
