@@ -1,0 +1,62 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;600&display=swap');
+  .vp-wrap { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 420px; display: flex; flex-direction: column; }
+  #vp-intro { padding: 32px 28px 24px; }
+  #vp-intro-text { font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #1a3a8f; letter-spacing: 0.12em; }
+  .vp-nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 28px; border-top: 1px solid #dce6f8; opacity: 0; }
+  .vp-logo { display: flex; align-items: center; gap: 8px; }
+  .vp-logo img { width: 32px; height: 32px; }
+  .vp-logo span { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: #1a3a8f; letter-spacing: 0.08em; }
+  .vp-back { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #1a3a8f; cursor: pointer; }
+  .vp-main { flex: 1; display: flex; align-items: center; justify-content: center; opacity: 0; padding: 60px 28px; }
+  .vp-coming { font-family: 'IBM Plex Mono', monospace; font-size: 38px; font-weight: 600; color: #1a3a8f; letter-spacing: 0.08em; text-align: center; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+</style>
+<div class="vp-wrap">
+  <div id="vp-intro">
+    <span id="vp-intro-text"></span><span id="vp-cursor" style="display:inline-block;width:9px;height:15px;background:#1a3a8f;vertical-align:middle;margin-left:2px;animation:blink 0.8s step-end infinite;"></span>
+  </div>
+  <nav class="vp-nav" id="vp-nav">
+    <div class="vp-logo">
+      <img src="/mnt/user-data/uploads/icon-automation.avif" alt="Verkkopantteri" />
+      <span>VERKKOPANTTERI</span>
+    </div>
+    <span class="vp-back">← etusivulle</span>
+  </nav>
+  <div class="vp-main" id="vp-main">
+    <div class="vp-coming">COMING SOON™</div>
+  </div>
+</div>
+<script>
+const cmd = '$~ run automation';
+const el = document.getElementById('vp-intro-text');
+const cursor = document.getElementById('vp-cursor');
+let i = 0;
+
+function type() {
+  if (i <= cmd.length) {
+    el.textContent = cmd.slice(0, i++);
+    setTimeout(type, 60);
+  } else {
+    cursor.style.animation = 'none';
+    cursor.style.opacity = '0';
+    setTimeout(reveal, 400);
+  }
+}
+
+function reveal() {
+  document.getElementById('vp-intro').style.display = 'none';
+  const nav = document.getElementById('vp-nav');
+  const main = document.getElementById('vp-main');
+  nav.style.animation = 'fadeIn 0.5s ease forwards';
+  nav.style.opacity = '1';
+  setTimeout(() => {
+    main.style.animation = 'fadeIn 0.5s ease forwards';
+    main.style.opacity = '1';
+  }, 200);
+}
+
+setTimeout(type, 200);
+</script>
