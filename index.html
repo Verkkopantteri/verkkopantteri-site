@@ -946,10 +946,7 @@
 
 <footer role="contentinfo" itemscope itemtype="https://schema.org/WPFooter">
   <div class="footer-logo">Verkko<span>Pantteri</span></div>
-  <nav aria-label="Alatunnisteen navigaatio" style="position:relative;" style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
-    <a href="palvelut.html" style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:rgba(200,204,214,0.4);text-decoration:none;text-transform:uppercase;" rel="noopener">Palvelut</a>
-    <a href="kasvulaskuri.html" style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:rgba(200,204,214,0.4);text-decoration:none;text-transform:uppercase;" rel="noopener">Kasvulaskuri</a>
-  </nav>
+  <a href="tietosuoja.html" style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:rgba(200,204,214,0.4);text-decoration:none;text-transform:uppercase;" rel="noopener">Tietosuoja</a>
   <div style="display:flex;align-items:center;gap:20px;">
     <div class="footer-text">© 2025 Verkkopantteri — Digimarkkinoinnin peto</div>
     <div style="display:flex;align-items:center;gap:14px;">
@@ -1262,7 +1259,7 @@ function initSparkEngine(canvasId, btnEl, COLORS){
 
   function periodicZap(){ if(!hovered && isVisible){ spawnArc(); const p=edgePoint(); spawnBurst(p.x,p.y,5); } }
   const _zapInterval = setInterval(periodicZap, 3800);
-  setTimeout(periodicZap, 1200);
+  setTimeout(function(){ if(isVisible) periodicZap(); }, 1200);
 
   function loop(){
     raf=requestAnimationFrame(loop);
@@ -1294,7 +1291,12 @@ function initSparkEngine(canvasId, btnEl, COLORS){
 (function(){
   const heroBtn=document.querySelector('.btn-primary');
   if(!heroBtn) return;
-  function zapHero(){ heroBtn.classList.remove('zapping'); void heroBtn.offsetWidth; heroBtn.classList.add('zapping'); }
+  let heroVisible=false;
+  const heroIO=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ heroVisible=e.isIntersecting; });
+  },{threshold:0.1});
+  heroIO.observe(heroBtn);
+  function zapHero(){ if(!heroVisible) return; heroBtn.classList.remove('zapping'); void heroBtn.offsetWidth; heroBtn.classList.add('zapping'); }
   setInterval(zapHero,4000); setTimeout(zapHero,1800);
 })();
 
@@ -1510,8 +1512,8 @@ function sendModalForm(){
 function vpBuildCookieBanner(){
   var lang=localStorage.getItem('vp_lang')||'fi';
   var T={
-    fi:{text:'<strong>Käytämme evästeitä</strong> — analytiikkaan ja sivuston kehittämiseen. Voit hyväksyä kaikki tai muuttaa asetuksia.',accept:'HYVÄKSY',settings:'MUUTA ASETUKSIA',popupTitle:'Evästeasetukset',popupDesc:'Voit valita, mitkä analytiikkatyökalut ovat käytössä. Välttämättömät toiminnalliset evästeet ovat aina päällä.',gaName:'Google Analytics',gaHint:'Kävijätilastot ja liikenneanalyysi',clarityName:'Microsoft Clarity',clarityHint:'Käytettävyys ja heatmap-analyysi',save:'TALLENNA',reject:'HYLKÄÄ'},
-    en:{text:'<strong>We use cookies</strong> — for analytics and improving the site. Accept all or adjust your settings.',accept:'ACCEPT',settings:'CHANGE SETTINGS',popupTitle:'Cookie Settings',popupDesc:'Choose which analytics tools are active. Essential functional cookies are always on.',gaName:'Google Analytics',gaHint:'Visitor stats and traffic analysis',clarityName:'Microsoft Clarity',clarityHint:'Usability and heatmap analysis',save:'SAVE',reject:'DECLINE'}
+    fi:{text:'Yksityisyytesi on meille tärkeää. Käytämme evästeitä sivuston toiminnan, kehittämisen ja analytiikan tueksi. Lisätietoja <a href="tietosuoja.html" style="color:#000;font-weight:700;text-decoration:underline;text-underline-offset:2px;">tietosuojaselosteessa</a>.',accept:'HYVÄKSY',settings:'MUUTA ASETUKSIA',popupTitle:'Evästeasetukset',popupDesc:'Voit valita, mitkä analytiikkatyökalut ovat käytössä. Välttämättömät toiminnalliset evästeet ovat aina päällä.',gaName:'Google Analytics',gaHint:'Kävijätilastot ja liikenneanalyysi',clarityName:'Microsoft Clarity',clarityHint:'Käytettävyys ja heatmap-analyysi',save:'TALLENNA',reject:'HYLKÄÄ'},
+    en:{text:'Your privacy matters to us. We use cookies to support site functionality, development and analytics. Read more in our <a href="tietosuoja.html" style="color:#000;font-weight:700;text-decoration:underline;text-underline-offset:2px;">privacy policy</a>.',accept:'ACCEPT',settings:'CHANGE SETTINGS',popupTitle:'Cookie Settings',popupDesc:'Choose which analytics tools are active. Essential functional cookies are always on.',gaName:'Google Analytics',gaHint:'Visitor stats and traffic analysis',clarityName:'Microsoft Clarity',clarityHint:'Usability and heatmap analysis',save:'SAVE',reject:'DECLINE'}
   };
   window._vpCookieT=T;
   var b=document.createElement('div');
