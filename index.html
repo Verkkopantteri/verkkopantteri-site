@@ -668,13 +668,7 @@
   gtag('js', new Date());
   gtag('config', 'G-LJTN2CTE78');
 </script>
-<script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
-    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "wwcwfq22fw");
-</script>
+<!-- Clarity loaded on consent -->
 
 </head>
 <body itemscope itemtype="https://schema.org/WebPage">
@@ -1477,15 +1471,15 @@ function sendModalForm(){
 (function injectCookieCSS(){
   var s=document.createElement('style');
   s.textContent=`
-  #vp-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9000;background:rgba(5,5,5,0.97);border-top:1px solid rgba(229,181,98,0.22);backdrop-filter:blur(24px);padding:20px 52px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;transform:translateY(110%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);}
+  #vp-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9000;background:#E5B562;border-top:3px solid #b8893a;backdrop-filter:blur(24px);padding:20px 52px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;transform:translateY(110%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);box-shadow:0 -4px 32px rgba(229,181,98,0.4);}
   #vp-cookie-banner.visible{transform:translateY(0);}
-  .vp-cookie-text{font-family:'Rajdhani',sans-serif;font-size:0.92rem;color:rgba(220,224,234,0.8);line-height:1.6;max-width:640px;}
-  .vp-cookie-text strong{color:#fff;}
+  .vp-cookie-text{font-family:'Rajdhani',sans-serif;font-size:0.92rem;color:#000;line-height:1.6;max-width:640px;}
+  .vp-cookie-text strong{color:#000;}
   .vp-cookie-btns{display:flex;gap:10px;flex-shrink:0;}
-  .vp-cookie-accept{font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#000;background:#E5B562;border:none;padding:11px 28px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background 0.2s,transform 0.2s;}
-  .vp-cookie-accept:hover{background:#f0c878;transform:translateY(-1px);}
-  .vp-cookie-settings{font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#9ca2b0;background:none;border:1px solid rgba(229,181,98,0.2);padding:11px 28px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:border-color 0.2s,color 0.2s;}
-  .vp-cookie-settings:hover{border-color:rgba(229,181,98,0.5);color:#fff;}
+  .vp-cookie-accept{font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#E5B562;background:#000;border:none;padding:11px 28px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background 0.2s,transform 0.2s;}
+  .vp-cookie-accept:hover{background:#1a1a1a;transform:translateY(-1px);}
+  .vp-cookie-settings{font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#000;background:none;border:1px solid rgba(0,0,0,0.3);padding:11px 28px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:border-color 0.2s,color 0.2s,background 0.2s;}
+  .vp-cookie-settings:hover{border-color:#000;background:rgba(0,0,0,0.08);color:#000;}
   @media(max-width:900px){#vp-cookie-banner{padding:16px 20px;flex-direction:column;align-items:flex-start;}.vp-cookie-btns{width:100%;}}
   #vp-cookie-popup{display:none;position:fixed;inset:0;z-index:9100;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;}
   #vp-cookie-popup.open{display:flex;}
@@ -1555,11 +1549,22 @@ function vpBuildCookieBanner(){
 function vpOpenPopup(){document.getElementById('vp-cookie-popup').classList.add('open');}
 function vpClosePopup(){document.getElementById('vp-cookie-popup').classList.remove('open');}
 
+function vpLoadClarity(){
+  if(window._clarityLoaded) return;
+  window._clarityLoaded=true;
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window,document,'clarity','script','wwcwfq22fw');
+}
+
 function vpCookieSave(ga,cl){
   localStorage.setItem('vp_consent_ga',ga?'1':'0');
   localStorage.setItem('vp_consent_cl',cl?'1':'0');
   localStorage.setItem('vp_consent_set','1');
   if(!ga) window['ga-disable-G-LJTN2CTE78']=true;
+  if(cl) vpLoadClarity();
   var b=document.getElementById('vp-cookie-banner');
   if(b) b.classList.remove('visible');
   vpClosePopup();
@@ -1575,6 +1580,7 @@ function vpCookieInit(){
     },900);
   } else {
     if(localStorage.getItem('vp_consent_ga')==='0') window['ga-disable-G-LJTN2CTE78']=true;
+    if(localStorage.getItem('vp_consent_cl')==='1') vpLoadClarity();
   }
 }
 
