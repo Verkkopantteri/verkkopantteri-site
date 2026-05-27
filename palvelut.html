@@ -447,9 +447,9 @@
     <div class="service-content">
       <div class="service-num">// 05 — Varaa esiintyjä</div>
       <div class="svc-title" id="svc-title-5">Nouseva sometähti kameran eteen</div>
-      <p class="svc-lead">Puuttuuko kasvosi sisällölle? Meillä on tekijä.</p>
+      <p class="svc-lead">Puuttuuko brändiltäsi kasvot? Meiltä löydät sisällöntuottajan.</p>
       <ul class="svc-features" id="svc-features-5">
-        <li>Sopii mainoksiin, brändivideoihin ja tuote-esittelyihin</li>
+        <li>Sopii lyhytvideoihin, mainoksiin ja vaikka tuote-esittelyihin</li>
         <li>Esiintyjä myös ilman tuotantopakettia</li>
         <li>Nopea vasteaika ja helppo yhteistyö</li>
         <li>Esiintyjiä saatavilla ympäri Suomen</li>
@@ -690,7 +690,7 @@ var VP_T = {
       {eye:'// 02 — Lyhytvideot', h:'Tehokkain orgaaninen<br><span class="gold">markkinointiformaatti.</span>', body:'Tuotamme sisältöä, joka pysäyttää selauksen.', cta:'Pyydä tarjous', items:['Hook-first käsikirjoitus ja ammattimainen editointi','Alustakohtainen optimointi TikTokiin, Reelseihin ja Shortseihin','Brändätty visuaalinen tyyli ja jatkuva sisällöntuotanto','Tekstit, grafiikat ja julkaisuvalmis editoitu sisältö sisältyvät']},
       {eye:'// 03 — Strategia', h:'Markkinointi joka<br><span class="gold">suuntaa oikein.</span>', body:'Muutamme datan suunnitelmaksi ja suunnitelman kasvuksi.', cta:'Pyydä tarjous', items:['Kohderyhmä- ja kilpailija-analyysi dataan perustuen','Funnelit ja sisältöstrategia kasvun tueksi','Kanavavalinnat ja priorisoitu toteutussuunnitelma','Jatkuva optimointi, seuranta ja kehitys']},
       {eye:'// 04 — Grafiikka', h:'Visuaalisuus joka<br><span class="gold">jää mieleen.</span>', body:'Suunnittelemme visuaalisuuden, joka näyttää ammattimaiselta ja erottuu kilpailijoista.', cta:'Pyydä tarjous', items:['Logot, brändi-identiteetit ja visuaaliset ohjeistukset','Somegrafiikat, mainosmateriaalit ja bannerit','Printtimateriaalit ja yritysesitykset','Animoidut grafiikat ja visuaaliset elementit videoihin']},
-      {eye:'// 05 — Varaa esiintyjä', h:'Nouseva sometähti<br><span class="gold">kameran eteen.</span>', body:'Puuttuuko kasvosi sisällölle? Meillä on tekijä.', cta:'Pyydä tarjous', items:['Sopii mainoksiin, brändivideoihin ja tuote-esittelyihin','Esiintyjä myös ilman tuotantopakettia','Nopea vasteaika ja helppo yhteistyö','Esiintyjiä saatavilla ympäri Suomen']}
+      {eye:'// 05 — Varaa esiintyjä', h:'Nouseva sometähti<br><span class="gold">kameran eteen.</span>', body:'Puuttuuko brändiltäsi kasvot? Meiltä löydät sisällöntuottajan.', cta:'Pyydä tarjous', items:['Sopii lyhytvideoihin, mainoksiin ja vaikka tuote-esittelyihin','Esiintyjä myös ilman tuotantopakettia','Nopea vasteaika ja helppo yhteistyö','Esiintyjiä saatavilla ympäri Suomen']}
     ],
     bottomH: 'Valmis kasvamaan<br><span>nopeammin?</span>',
     bottomP: 'Kerro meille projektistasi — lähetämme tarjouksen 24 tunnin sisällä. Ei sitoumuksia, ei piilokuluja.',
@@ -708,7 +708,7 @@ var VP_T = {
       {eye:'// 02 — Short Videos', h:'The most effective organic<br><span class="gold">marketing format today.</span>', body:'We produce content that stops the scroll.', cta:'Request a quote', items:['Hook-first scripting and professional editing','Platform-specific optimisation for TikTok, Reels and Shorts','Branded visual style and ongoing content production','Text, graphics and publish-ready edited content included']},
       {eye:'// 03 — Marketing Strategy', h:'Without strategy,<br><span class="gold">marketing is guesswork.</span>', body:'We turn data into a plan and a plan into growth.', cta:'Request a quote', items:['Target audience and competitor analysis based on data','Funnels and content strategy for growth','Channel selection and prioritised action plan','Ongoing optimisation, tracking and development']},
       {eye:'// 04 — Graphic Design', h:'First impressions form<br><span class="gold">in seconds.</span>', body:'We design visuals that look professional and stand out from competitors.', cta:'Request a quote', items:['Logos, brand identities and visual guidelines','Social graphics, ad materials and banners','Print materials and corporate presentations','Animated graphics and visual elements for videos']},
-      {eye:'// 05 — Book a Performer', h:'Rising social star<br><span class="gold">for the camera.</span>', body:'Missing a face for your content? We have the person.', cta:'Request a quote', items:['Suitable for ads, brand videos and product demos','Performer available without a full production package','Fast response time and easy collaboration','Performers available across Finland']}
+      {eye:'// 05 — Book a Performer', h:'Rising social star<br><span class="gold">for the camera.</span>', body:'Does your brand lack a face? Find your content creator with us.', cta:'Request a quote', items:['Perfect for short videos, ads and product demos','Performer available without a full production package','Fast response time and easy collaboration','Performers available across Finland']}
     ],
     bottomH: 'Ready to grow<br><span>faster?</span>',
     bottomP: 'Tell us about your project — we\'ll send a quote within 24 hours. No commitments, no hidden costs.',
@@ -739,7 +739,7 @@ function setLang(lang) {
     var eye = sec.querySelector('.svc-eyebrow, .service-num'); if(eye) eye.textContent = b.eye;
     var h = sec.querySelector('.svc-heading, .svc-title'); if(h) h.innerHTML = b.h;
     var body = sec.querySelector('.svc-body, .svc-lead'); if(body) body.textContent = b.body;
-    var cta = sec.querySelector('.svc-cta'); if(cta) { var arrow = cta.querySelector('.svc-cta-arrow'); cta.innerHTML = b.cta; if(arrow) cta.appendChild(document.createTextNode(' ')); if(arrow) cta.appendChild(arrow); else cta.innerHTML = b.cta + ' <span class="svc-cta-arrow">→</span>'; }
+    var cta = sec.querySelector('.svc-cta'); if(cta) { var firstText = cta.firstChild; if(firstText && firstText.nodeType===3) { firstText.nodeValue = b.cta + ' '; } else { var arrow2 = cta.querySelector('.svc-cta-arrow'); cta.innerHTML = b.cta + ' <span class="svc-cta-arrow">→</span>'; } }
     var items = sec.querySelectorAll('.svc-list li, .svc-features li');
     items.forEach(function(li, j){ if(b.items[j]) li.textContent = b.items[j]; });
   });
