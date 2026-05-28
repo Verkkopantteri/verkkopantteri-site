@@ -1,62 +1,486 @@
-
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verkkopantteri – Automaatio</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;600&display=swap');
-  .vp-wrap { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 420px; display: flex; flex-direction: column; }
-  #vp-intro { padding: 32px 28px 24px; }
-  #vp-intro-text { font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #1a3a8f; letter-spacing: 0.12em; }
-  .vp-nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 28px; border-top: 1px solid #dce6f8; border-bottom: 1px solid #dce6f8; opacity: 0; }
-  .vp-logo { display: flex; align-items: center; gap: 8px; }
-  .vp-logo img { width: 32px; height: 32px; }
-  .vp-logo span { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: #1a3a8f; letter-spacing: 0.08em; }
-  .vp-back { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #1a3a8f; cursor: pointer; }
-  .vp-main { flex: 1; display: flex; align-items: center; justify-content: center; opacity: 0; padding: 60px 28px; }
-  .vp-coming { font-family: 'IBM Plex Mono', monospace; font-size: 38px; font-weight: 600; color: #1a3a8f; letter-spacing: 0.08em; text-align: center; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#05060f;
+  --cyan:#00e5ff;
+  --purple:#7b4fff;
+  --green:#00ff9d;
+  --pink:#ff6b9d;
+  --border:rgba(0,229,255,0.12);
+  --mono:'IBM Plex Mono',monospace;
+  --display:'Orbitron',monospace;
+  --body:'Exo 2',sans-serif;
+}
+html,body{height:100%;background:var(--bg);color:#fff;font-family:var(--body);overflow-x:hidden}
+
+/* grid */
+body::before{content:'';position:fixed;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:52px 52px;pointer-events:none;z-index:0;opacity:0.22}
+/* scanline */
+body::after{content:'';position:fixed;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(0,229,255,0.18),transparent);
+  animation:scanDown 10s linear infinite;pointer-events:none;z-index:1}
+
+/* VIDEO BG */
+#bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.28;pointer-events:none}
+#bg-overlay{position:fixed;inset:0;background:linear-gradient(135deg,rgba(5,6,15,0.82) 0%,rgba(5,6,15,0.5) 50%,rgba(5,6,15,0.78) 100%);z-index:0;pointer-events:none}
+
+@keyframes scanDown{0%{top:-2px}100%{top:100vh}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.15}}
+@keyframes flowLine{0%{stroke-dashoffset:300}100%{stroke-dashoffset:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes nodeIn{from{opacity:0;transform:scale(0.75)}to{opacity:1;transform:scale(1)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(0,229,255,0.12),0 0 40px rgba(0,229,255,0.04)}50%{box-shadow:0 0 40px rgba(0,229,255,0.3),0 0 80px rgba(123,79,255,0.12)}}
+@keyframes borderShift{0%{background-position:0% 0}100%{background-position:200% 0}}
+@keyframes ctaGlow{0%,100%{box-shadow:0 0 28px rgba(0,229,255,0.08)}50%{box-shadow:0 0 55px rgba(0,229,255,0.28),0 0 90px rgba(123,79,255,0.18)}}
+
+/* INTRO */
+#intro-overlay{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;align-items:center;justify-content:center;opacity:1}
+#intro-inner{font-family:var(--mono);font-size:1rem;color:#fff;display:flex;align-items:center;gap:2px;letter-spacing:0.2em}
+#intro-cursor{display:inline-block;width:10px;height:18px;background:var(--cyan);animation:blink 0.7s step-end infinite;vertical-align:middle}
+
+/* PAGE */
+#page{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;opacity:0;transition:opacity 0.6s ease}
+#page.visible{opacity:1}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:52px;flex-shrink:0;
+  border-bottom:1px solid var(--border);background:rgba(5,6,15,0.88);backdrop-filter:blur(14px);
+  position:sticky;top:0;z-index:10}
+.nav-logo{font-family:var(--display);font-size:0.72rem;font-weight:900;letter-spacing:0.14em;color:#fff;text-transform:uppercase;text-decoration:none}
+.nav-title{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.nav-dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 6px var(--cyan);animation:blink 1.4s ease infinite}
+.nav-back{font-family:var(--mono);font-size:0.62rem;color:rgba(255,255,255,0.5);letter-spacing:0.08em;text-decoration:none;transition:color 0.2s}
+.nav-back:hover{color:#fff}
+
+/* EARLY BANNER */
+#early-bar{
+  position:relative;z-index:3;
+  border-bottom:1px solid rgba(123,79,255,0.25);
+  background:rgba(13,10,26,0.85);
+  backdrop-filter:blur(10px);
+  padding:10px 32px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  animation:fadeUp 0.5s ease 0.2s both;
+}
+.early-dot{width:5px;height:5px;border-radius:50%;background:var(--purple);box-shadow:0 0 6px var(--purple);flex-shrink:0}
+.early-text{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.07em;color:rgba(255,255,255,0.65);line-height:1.6;text-align:center}
+.early-text strong{color:#fff;font-weight:600}
+
+/* CANVAS */
+#canvas{
+  flex:1;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  padding:48px 20px;
+  /* constrained width so diagram doesn't sprawl */
+}
+#canvas-inner{
+  position:relative;
+  width:min(820px,100%);
+  height:520px;
+}
+#wires{position:absolute;inset:0;pointer-events:none;z-index:1;width:100%;height:100%}
+
+/* CENTER BOX */
+#center-box{
+  position:absolute;
+  z-index:5;
+  text-align:center;
+  animation:fadeUp 0.7s ease 0.4s both;
+}
+.center-inner{
+  display:inline-block;
+  padding:28px 36px;
+  border:1px solid rgba(0,229,255,0.45);
+  background:rgba(5,6,15,0.96);
+  border-radius:16px;
+  position:relative;
+  white-space:nowrap;
+  animation:glowPulse 4s ease-in-out infinite;
+}
+.center-inner::before{content:'';position:absolute;inset:0;border-radius:16px;padding:1px;
+  background:linear-gradient(135deg,var(--cyan),var(--purple),var(--cyan));
+  background-size:200% 200%;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  animation:borderShift 4s linear infinite;pointer-events:none}
+.center-inner::after{display:none}
+.corner-br{display:none}
+.run-tag{font-family:var(--mono);font-size:0.6rem;color:#fff;letter-spacing:0.18em;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-bottom:12px;}
+.run-dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:blink 1.4s ease infinite}
+.hero-title{font-family:var(--display);font-size:clamp(1.6rem,3vw,2.5rem);font-weight:900;line-height:1.06;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:6px}
+.hero-title .grad{background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--mono);letter-spacing:0.06em}
+
+/* NODE CARDS */
+.node-card{
+  position:absolute;z-index:4;
+  width:175px;
+  padding:14px 18px;
+  border:1px solid rgba(0,229,255,0.22);
+  background:rgba(5,6,15,0.93);
+  border-radius:10px;
+  cursor:default;
+  transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s;
+  opacity:0;
+}
+.node-card.visible{animation:nodeIn 0.45s ease forwards}
+.node-card:hover{border-color:rgba(0,229,255,0.65);transform:scale(1.04) translateY(-2px);box-shadow:0 0 24px rgba(0,229,255,0.12)}
+.node-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;border-radius:2px 0 0 2px;
+  background:linear-gradient(180deg,var(--cyan),var(--purple));opacity:0.6}
+.node-title{font-family:var(--display);font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#fff;margin-bottom:5px}
+.node-text{font-size:0.7rem;color:rgba(255,255,255,0.58);line-height:1.55}
+
+.node-sub{font-size:0.6rem;color:rgba(255,255,255,0.4);line-height:1.5;margin-top:5px}
+.node-top{border-color:rgba(0,229,255,0.4) !important;width:210px !important}
+.node-top::before{background:linear-gradient(180deg,var(--cyan),var(--purple)) !important;opacity:0.9 !important}
+
+/* CTA NODE */
+.node-cta{border-color:rgba(0,229,255,0.4) !important;width:238px !important}
+.node-cta::before{background:linear-gradient(180deg,var(--cyan),var(--purple)) !important;opacity:0.9 !important}
+.node-cta:hover{border-color:rgba(0,229,255,0.85) !important;box-shadow:0 0 30px rgba(0,229,255,0.2) !important}
+.node-cta-link{
+  display:inline-flex;align-items:center;gap:5px;margin-top:9px;
+  font-family:var(--mono);font-size:0.58rem;font-weight:600;letter-spacing:0.05em;
+  color:var(--cyan);text-decoration:none;transition:gap 0.2s;
+}
+.node-cta-link:hover{gap:9px}
+
+/* CTA split block */
+.cta-split-btn{display:flex;align-items:stretch;text-decoration:none;width:100%;height:100%}
+.cta-split-left{background:linear-gradient(135deg,var(--cyan),var(--purple));padding:14px 14px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;transition:filter 0.2s}
+.cta-split-body{padding:10px 13px;display:flex;flex-direction:column;justify-content:center;gap:2px;flex:1;min-width:0}
+.cta-split-top{font-family:var(--mono);font-size:0.52rem;color:rgba(255,255,255,0.5);letter-spacing:0.12em;text-transform:uppercase}
+.cta-split-main{font-family:var(--display);font-size:0.72rem;font-weight:700;letter-spacing:0.07em;color:#fff;text-transform:uppercase}
+.cta-split-email{font-family:var(--mono);font-size:0.52rem;color:rgba(255,255,255,0.82);letter-spacing:0.04em;white-space:nowrap;overflow:hidden;text-overflow:clip}
+.cta-split-btn:hover .cta-split-left{filter:brightness(1.2)}
+.cta-split-btn:hover .cta-split-body{background:rgba(0,229,255,0.04)}
+
+#canvas-inner{
+  position:relative;
+  width:min(820px,100%);
+  height:600px;
+}
+
+@media(max-width:700px){
+  .nav-title{display:none}
+  #early-bar{padding:10px 16px}
+  .center-inner{white-space:normal;padding:22px 20px}
+}
 </style>
-<div class="vp-wrap">
-  <div id="vp-intro">
-    <span id="vp-intro-text"></span><span id="vp-cursor" style="display:inline-block;width:9px;height:15px;background:#1a3a8f;vertical-align:middle;margin-left:2px;animation:blink 0.8s step-end infinite;"></span>
-  </div>
-  <nav class="vp-nav" id="vp-nav">
-    <div class="vp-logo">
-      <img src="images/icon-automation.avif" alt="Verkkopantteri" />
-      <span>VERKKOPANTTERI</span>
-    </div>
-    <a href="index.html" class="vp-back">← etusivulle</a>
-  </nav>
-  <div class="vp-main" id="vp-main">
-    <div class="vp-coming">COMING SOON™</div>
-  </div>
+</head>
+<body>
+
+<video id="bg-video" src="videos/bg_auto.mp4" autoplay muted loop playsinline></video>
+<div id="bg-overlay"></div>
+
+<div id="intro-overlay">
+  <div id="intro-inner"><span id="intro-text"></span><span id="intro-cursor"></span></div>
 </div>
+
+<div id="page">
+  <nav>
+    <a href="index.html" class="nav-logo">Verkkopantteri</a>
+    <div class="nav-title"><span class="nav-dot"></span>Automaatio</div>
+    <a href="index.html" class="nav-back">← etusivulle</a>
+  </nav>
+
+  <!-- DIAGRAM CANVAS -->
+  <div id="canvas">
+    <div id="canvas-inner">
+      <svg id="wires" xmlns="http://www.w3.org/2000/svg"></svg>
+
+      <!-- CENTER -->
+      <div id="center-box">
+        <div class="center-inner">
+          <span class="corner-br"></span>
+          <div class="run-tag"><span class="run-dot"></span>$~ verkkopantteri.exe</div>
+          <h1 class="hero-title">Kun Excel<br><span class="grad">ei enää riitä</span></h1>
+          <p class="hero-sub">Tarvitaan digiviidakko.</p>
+        </div>
+      </div>
+
+      <!-- NODES -->
+      <div class="node-card" id="node-0">
+        <div class="node-title">AI &amp; Automation</div>
+        <div class="node-text">Prosessit käynnistyvät automaattisesti oikeille henkilöille.</div>
+      </div>
+      <div class="node-card" id="node-1">
+        <div class="node-title">SaaS-ratkaisut</div>
+        <div class="node-text">Integraatiot ja pilvipalvelut saumattomasti yhteen.</div>
+      </div>
+      <div class="node-card" id="node-2">
+        <div class="node-title">CRM &amp; CSM</div>
+        <div class="node-text">Asiakkuudenhallinta älykkäästi automatisoituna.</div>
+      </div>
+      <div class="node-card" id="node-3">
+        <div class="node-title">Räätälöidyt järjestelmät</div>
+        <div class="node-text">Rakennamme alusta — ei muokata vanhaa.</div>
+      </div>
+      <!-- MID RIGHT node -->
+      <div class="node-card" id="node-6">
+        <div class="node-title">Riskitön toimitus</div>
+        <div class="node-text">Maksat vasta toimivasta kokonaisuudesta.</div>
+      </div>
+      <!-- MID LEFT node -->
+      <div class="node-card" id="node-7">
+        <div class="node-title">Lisää tehokkuutta</div>
+        <div class="node-text">Säästä kymmeniä tunteja kuukaudessa.</div>
+      </div>
+      <!-- TOP CENTER node -->
+      <div class="node-card node-top" id="node-5">
+        <div class="node-title">Uusi Aluevaltaus</div>
+        <div class="node-text">Kilpailukykyinen hinta kokemuksesta.</div>
+      </div>
+      <!-- CTA as 5th node at bottom center -->
+      <div class="node-card node-cta" id="node-4" style="padding:0;overflow:hidden;width:238px!important">
+        <a href="mailto:automation@verkkopantteri.fi" class="cta-split-btn">
+          <div class="cta-split-left">✉</div>
+          <div class="cta-split-body">
+            <span class="cta-split-top">Mikä hidastaa?</span>
+            <span class="cta-split-main">Aloitetaan yhdessä</span>
+            <span class="cta-split-email">automation@verkkopantteri.fi</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
 <script>
-const cmd = '$~ run automation';
-const el = document.getElementById('vp-intro-text');
-const cursor = document.getElementById('vp-cursor');
-let i = 0;
-
-function type() {
-  if (i <= cmd.length) {
-    el.textContent = cmd.slice(0, i++);
-    setTimeout(type, 60);
-  } else {
-    cursor.style.animation = 'none';
-    cursor.style.opacity = '0';
-    setTimeout(reveal, 400);
+(function(){
+  const cmd='run verkkopantteri.exe';
+  const el=document.getElementById('intro-text');
+  let i=0;
+  function type(){
+    if(i<=cmd.length){el.textContent=cmd.slice(0,i++);setTimeout(type,i===1?80:22);}
+    else setTimeout(reveal,150);
   }
-}
+  function reveal(){
+    const ov=document.getElementById('intro-overlay');
+    ov.style.transition='opacity 0.5s ease';ov.style.opacity='0';
+    setTimeout(()=>{ov.style.display='none';document.getElementById('page').classList.add('visible');init();},500);
+  }
+  type();
+})();
 
-function reveal() {
-  document.getElementById('vp-intro').style.display = 'none';
-  const nav = document.getElementById('vp-nav');
-  const main = document.getElementById('vp-main');
-  nav.style.animation = 'fadeIn 0.5s ease forwards';
-  nav.style.opacity = '1';
-  setTimeout(() => {
-    main.style.animation = 'fadeIn 0.5s ease forwards';
-    main.style.opacity = '1';
-  }, 200);
-}
+function init(){
+  const inner=document.getElementById('canvas-inner');
+  const svg=document.getElementById('wires');
+  const COLORS=['#00e5ff','#7b4fff','#00ff9d','#ff6b9d'];
+  const NW=175, NH=85; // node card approx dimensions
 
-setTimeout(type, 200);
+  function makeSvgEl(tag){return document.createElementNS('http://www.w3.org/2000/svg',tag)}
+
+  function layout(){
+    const W=inner.offsetWidth, H=inner.offsetHeight;
+    const isMobile = W < 700;
+    const mx=24, my=16;
+    const gap=10;
+    const pairGap=8;
+    const pathLen=400;
+
+    // Helper: place a node
+    function place(id, x, y, w){
+      const n=document.getElementById(id);
+      n.style.left=x+'px'; n.style.top=y+'px';
+      n.style.width=w?w+'px':'';
+      n.style.display='';
+      return n;
+    }
+
+    // Helper: draw a wire from (nx,ny) to (tx,ty) with L-bend, color, delay
+    function wire(nx,ny,tx,ty,color,delay,straight){
+      let d;
+      if(straight){
+        d=`M${nx},${ny} L${tx},${ty}`;
+      } else {
+        const bmx=(nx+tx)/2;
+        d=`M${nx},${ny} L${bmx},${ny} L${bmx},${ty} L${tx},${ty}`;
+        // corner dots
+        [[bmx,ny],[bmx,ty]].forEach(([bx,by])=>{
+          const sq=makeSvgEl('rect');
+          sq.setAttribute('x',bx-3);sq.setAttribute('y',by-3);
+          sq.setAttribute('width','6');sq.setAttribute('height','6');
+          sq.setAttribute('fill',color);sq.setAttribute('opacity','0.7');sq.setAttribute('rx','1');
+          svg.appendChild(sq);
+        });
+      }
+      const p1=makeSvgEl('path');
+      p1.setAttribute('d',d);p1.setAttribute('fill','none');
+      p1.setAttribute('stroke',color);p1.setAttribute('stroke-width','1.1');
+      p1.setAttribute('opacity','0.45');p1.setAttribute('stroke-dasharray','6 4');
+      p1.style.cssText=`stroke-dashoffset:${pathLen};animation:flowLine 0.9s ease ${delay}s forwards`;
+      svg.appendChild(p1);
+      const p2=makeSvgEl('path');
+      p2.setAttribute('d',d);p2.setAttribute('fill','none');
+      p2.setAttribute('stroke',color);p2.setAttribute('stroke-width','0.6');
+      p2.setAttribute('opacity','0.85');p2.setAttribute('filter','url(#glow)');
+      p2.setAttribute('stroke-dasharray','3 9');
+      p2.style.cssText=`stroke-dashoffset:${pathLen};animation:flowLine 0.75s ease ${delay+0.08}s forwards`;
+      svg.appendChild(p2);
+      // endpoint dot
+      const dot=makeSvgEl('circle');
+      dot.setAttribute('cx',nx);dot.setAttribute('cy',ny);dot.setAttribute('r','4');
+      dot.setAttribute('fill',color);dot.setAttribute('opacity','0.8');dot.setAttribute('filter','url(#glow)');
+      svg.appendChild(dot);
+    }
+
+    let cx, cy, totalH;
+
+    if(isMobile){
+      const cardW = Math.floor((W - mx*2 - pairGap) / 2);
+      let y = my;
+
+      // 1. node-5 top center
+      const n5=place('node-5', W/2-cardW/2, y, cardW);
+      y += n5.offsetHeight + gap;
+
+      // 2. node-0 + node-1 side by side
+      const n0=place('node-0', mx, y, cardW);
+      const n1=place('node-1', mx+cardW+pairGap, y, cardW);
+      y += Math.max(n0.offsetHeight, n1.offsetHeight) + gap;
+
+      // 3. center-box
+      const cb=document.getElementById('center-box');
+      cb.style.left='0'; cb.style.top=y+'px';
+      cb.style.width=W+'px'; cb.style.height='auto';
+      cb.style.display='flex'; cb.style.alignItems='center'; cb.style.justifyContent='center';
+      cb.style.pointerEvents='none';
+      cb.querySelector('.center-inner').style.pointerEvents='auto';
+      const cbH = cb.offsetHeight;
+      cy = y + cbH/2;
+      cx = W/2;
+      y += cbH + gap;
+
+      // 4. node-2 + node-3 side by side
+      const n2=place('node-2', mx, y, cardW);
+      const n3=place('node-3', mx+cardW+pairGap, y, cardW);
+      y += Math.max(n2.offsetHeight, n3.offsetHeight) + gap;
+
+      // 5. node-4 CTA bottom center
+      const n4=place('node-4', W/2-cardW/2, y, cardW);
+      y += n4.offsetHeight + my;
+
+      // hide mid nodes
+      document.getElementById('node-6').style.display='none';
+      document.getElementById('node-7').style.display='none';
+
+      totalH = y;
+      inner.style.height = totalH+'px';
+
+      // SVG sized to full mobile height
+      svg.setAttribute('viewBox',`0 0 ${W} ${totalH}`);
+      svg.setAttribute('width',W); svg.setAttribute('height',totalH);
+      svg.innerHTML='';
+
+      // defs
+      const defs=makeSvgEl('defs');
+      const filt=makeSvgEl('filter');filt.id='glow';filt.setAttribute('x','-20%');filt.setAttribute('y','-20%');filt.setAttribute('width','140%');filt.setAttribute('height','140%');
+      const feB=makeSvgEl('feGaussianBlur');feB.setAttribute('stdDeviation','2.5');feB.setAttribute('result','b');
+      const feM=makeSvgEl('feMerge');
+      const m1=makeSvgEl('feMergeNode');m1.setAttribute('in','b');
+      const m2=makeSvgEl('feMergeNode');m2.setAttribute('in','SourceGraphic');
+      feM.appendChild(m1);feM.appendChild(m2);
+      filt.appendChild(feB);filt.appendChild(feM);
+      defs.appendChild(filt); svg.appendChild(defs);
+
+      // wires: each node center → center-box center, straight vertical or L-bend
+      // node-5 (top center) → center-box top
+      wire(cx, parseFloat(n5.style.top)+n5.offsetHeight, cx, cy, '#7b4fff', 0.5, true);
+      // node-0 center → center-box left
+      wire(parseFloat(n0.style.left)+n0.offsetWidth/2, parseFloat(n0.style.top)+n0.offsetHeight/2, cx, cy, '#00e5ff', 0.6, false);
+      // node-1 center → center-box right
+      wire(parseFloat(n1.style.left)+n1.offsetWidth/2, parseFloat(n1.style.top)+n1.offsetHeight/2, cx, cy, '#7b4fff', 0.7, false);
+      // node-2 center → center-box left
+      wire(parseFloat(n2.style.left)+n2.offsetWidth/2, parseFloat(n2.style.top)+n2.offsetHeight/2, cx, cy, '#00ff9d', 0.8, false);
+      // node-3 center → center-box right
+      wire(parseFloat(n3.style.left)+n3.offsetWidth/2, parseFloat(n3.style.top)+n3.offsetHeight/2, cx, cy, '#ff6b9d', 0.9, false);
+      // node-4 (CTA bottom) → center-box bottom
+      wire(cx, parseFloat(n4.style.top), cx, cy, '#00e5ff', 1.0, true);
+
+      // center dot
+      const cd=makeSvgEl('circle');
+      cd.setAttribute('cx',cx);cd.setAttribute('cy',cy);cd.setAttribute('r','5');
+      cd.setAttribute('fill','var(--cyan)');cd.setAttribute('opacity','0.9');cd.setAttribute('filter','url(#glow)');
+      svg.appendChild(cd);
+      return;
+    }
+
+    // ── DESKTOP ──────────────────────────────────────────────
+    cx=W/2; cy=H/2;
+    totalH=H;
+
+    const positions=[
+      {x:mx,        y:my},
+      {x:W-mx-NW,   y:my},
+      {x:mx,        y:H-my-NH*1.4},
+      {x:W-mx-NW,   y:H-my-NH*1.4},
+    ];
+    positions.forEach((p,i)=>{ place('node-'+i, p.x, p.y); });
+
+    const topW=210;
+    const topN=place('node-5', W/2-topW/2, my, topW);
+    const ctaW=210, ctaH=110;
+    place('node-4', W/2-ctaW/2, H-my-ctaH, ctaW);
+    place('node-6', W-mx-NW, cy-NH/2);
+    place('node-7', mx, cy-NH/2);
+
+    const cb=document.getElementById('center-box');
+    cb.style.left='0'; cb.style.top='0';
+    cb.style.width=W+'px'; cb.style.display='flex';
+    cb.style.alignItems='center'; cb.style.justifyContent='center';
+    cb.style.height=H+'px'; cb.style.pointerEvents='none';
+    cb.querySelector('.center-inner').style.pointerEvents='auto';
+
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    svg.setAttribute('width',W); svg.setAttribute('height',H);
+    svg.innerHTML='';
+
+    const defs=makeSvgEl('defs');
+    const filt=makeSvgEl('filter');filt.id='glow';filt.setAttribute('x','-20%');filt.setAttribute('y','-20%');filt.setAttribute('width','140%');filt.setAttribute('height','140%');
+    const feB=makeSvgEl('feGaussianBlur');feB.setAttribute('stdDeviation','2.5');feB.setAttribute('result','b');
+    const feM=makeSvgEl('feMerge');
+    const m1=makeSvgEl('feMergeNode');m1.setAttribute('in','b');
+    const m2=makeSvgEl('feMergeNode');m2.setAttribute('in','SourceGraphic');
+    feM.appendChild(m1);feM.appendChild(m2);
+    filt.appendChild(feB);filt.appendChild(feM);
+    defs.appendChild(filt); svg.appendChild(defs);
+
+    positions.forEach((p,idx)=>{
+      const col=COLORS[idx]; const delay=0.5+idx*0.18;
+      const nx=p.x+NW/2, ny=p.y+NH/2;
+      wire(nx,ny,cx,cy,col,delay,false);
+    });
+    wire(cx, H-my-ctaH, cx, cy, '#00e5ff', 0.5+4*0.18, true);
+    wire(cx, my+topN.offsetHeight, cx, cy, '#7b4fff', 0.5+5*0.18, true);
+    wire((W-mx-NW)+NW/2, cy, cx, cy, '#ff6b9d', 0.5+6*0.18, false);
+    wire(mx+NW/2, cy, cx, cy, '#00ff9d', 0.5+7*0.18, false);
+
+    const cd=makeSvgEl('circle');
+    cd.setAttribute('cx',cx);cd.setAttribute('cy',cy);cd.setAttribute('r','5');
+    cd.setAttribute('fill','var(--cyan)');cd.setAttribute('opacity','0.9');cd.setAttribute('filter','url(#glow)');
+    svg.appendChild(cd);
+  }
+
+  layout();
+  window.addEventListener('resize',layout);
+
+  document.querySelectorAll('.node-card').forEach((n,i)=>{
+    setTimeout(()=>n.classList.add('visible'),650+i*140);
+  });
+}
 </script>
+</body>
+</html>
