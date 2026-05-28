@@ -172,9 +172,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 32px
 }
 
 @media(max-width:700px){
-  html,body{overflow:hidden !important;height:100%}
-  #page{height:100vh;overflow:hidden}
-  #canvas{padding:0 !important;overflow:hidden}
   .nav-title{display:none}
   #early-bar{padding:10px 16px}
   .center-inner{white-space:normal;padding:22px 20px}
@@ -394,18 +391,6 @@ function init(){
 
       totalH = y;
       inner.style.height = totalH+'px';
-
-      // Skaalaa koko canvas-inner sopimaan näyttöön ilman scrollausta
-      const navH = document.querySelector('nav').offsetHeight;
-      const barH = document.getElementById('early-bar').offsetHeight;
-      const availH = window.innerHeight - navH - barH;
-      const scale = Math.min(1, availH / totalH);
-      inner.style.transformOrigin = 'top center';
-      inner.style.transform = scale < 1 ? `scale(${scale})` : '';
-      // Kutista canvas-wrapper skaalatulle korkeudelle niin ei jää tyhjää
-      const canvas = document.getElementById('canvas');
-      canvas.style.height = Math.ceil(totalH * scale) + 'px';
-      canvas.style.alignItems = 'flex-start';
 
       // SVG sized to full mobile height
       svg.setAttribute('viewBox',`0 0 ${W} ${totalH}`);
