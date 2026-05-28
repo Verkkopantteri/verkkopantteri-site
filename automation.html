@@ -404,7 +404,7 @@ function init(){
 
       // Skaalaa koko canvas-inner sopimaan näyttöön ilman scrollausta
       const navH = document.querySelector('nav').offsetHeight;
-      const barH = document.getElementById('early-bar').offsetHeight;
+      const earlyBarEl = document.getElementById('early-bar'); const barH = earlyBarEl ? earlyBarEl.offsetHeight : 0;
       const availH = window.innerHeight - navH - barH;
       const scale = Math.min(1, availH / totalH);
       inner.style.transformOrigin = 'top center';
