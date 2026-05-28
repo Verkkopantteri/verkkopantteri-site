@@ -645,654 +645,6 @@ if(document.readyState==='loading'){
 }
 </script>
 
-
-ang="fi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tietosuojaseloste – Verkkopantteri</title>
-<meta name="description" content="Verkkopantterin tietosuojaseloste. Tietoa evästeiden käytöstä, Microsoft Clarity -seurannasta ja henkilötietojen käsittelystä.">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.verkkopantteri.fi/tietosuoja.html">
-<link rel="icon" type="image/png" sizes="32x32" href="icon_32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="icon_180.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --black:#000000;
-    --gold:#E5B562;
-    --gold-deep:#b8893a;
-    --gold-glow:rgba(229,181,98,0.15);
-    --white:#ffffff;
-  }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:#000;
-    color:var(--white);
-    font-family:'Rajdhani',sans-serif;
-    min-height:100vh;
-    position:relative;
-    overflow-x:hidden;
-  }
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar{width:6px;height:6px;}
-  ::-webkit-scrollbar-track{background:rgba(0,0,0,0.6);}
-  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#E5B562 0%,#b8893a 100%);border-radius:3px;}
-  ::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#f0c878 0%,#E5B562 100%);}
-  *{scrollbar-width:thin;scrollbar-color:#E5B562 rgba(0,0,0,0.6);}
-  .grid-bg{
-    position:fixed;inset:0;pointer-events:none;z-index:0;
-    background-image:linear-gradient(rgba(229,181,98,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(229,181,98,0.03) 1px,transparent 1px);
-    background-size:60px 60px;
-  }
-  .vignette{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,0.7) 100%);}
-
-  /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;height:72px;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:0 52px;background:linear-gradient(to bottom,rgba(0,0,0,0.97) 0%,transparent 100%);}
-  .nav-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1.05rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);text-decoration:none;}
-  .nav-logo span{color:var(--gold);}
-  .nav-links{display:flex;gap:40px;list-style:none;}
-  .nav-links a{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,204,214,0.75);text-decoration:none;transition:color 0.25s;}
-  .nav-links a:hover,.nav-links a.active{color:var(--gold);}
-  .nav-links a.portal-link{color:var(--gold);}
-  .nav-links a.portal-link:hover{color:#f0c878;}
-  .nav-right{display:flex;align-items:center;gap:20px;}
-  .lang-switcher{display:flex;align-items:center;gap:4px;}
-  .lang-btn{background:none;border:1px solid transparent;cursor:pointer;padding:3px 5px;border-radius:2px;line-height:1;transition:border-color 0.2s,transform 0.15s;opacity:0.6;display:flex;align-items:center;justify-content:center;}
-  .lang-btn img{width:22px;height:15px;object-fit:cover;display:block;}
-  .lang-btn:hover{opacity:1;transform:scale(1.08);}
-  .lang-btn.active{opacity:1;border-color:rgba(229,181,98,0.4);}
-  .nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
-  .nav-hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:all 0.3s;}
-  .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-  .nav-hamburger.open span:nth-child(2){opacity:0;}
-  .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-  .nav-portal{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:color 0.25s;display:inline-flex;align-items:center;gap:6px;}
-  .nav-portal:hover{color:#f0c878;}
-  .nav-cta{font-family:'Orbitron',monospace;font-weight:700;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--black);background:var(--gold);border:none;padding:10px 26px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background 0.2s,transform 0.2s;text-decoration:none;display:inline-block;}
-  .nav-cta:hover{background:#f0c878;transform:translateY(-1px);}
-  .nav-links a.nav-automation-link{color:rgba(120,160,255,0.85);}
-  .nav-links a.nav-automation-link:hover{color:#8ab0ff;}
-
-  /* PAGE WRAPPER */
-  .page-wrap{
-    position:relative;z-index:10;
-    max-width:900px;
-    margin:0 auto;
-    padding:120px 52px 80px;
-  }
-
-  /* HEADER */
-  .page-eyebrow{
-    display:flex;align-items:center;gap:12px;
-    font-family:'Share Tech Mono',monospace;font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;
-    color:var(--gold);margin-bottom:20px;
-  }
-  .page-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--gold);}
-  .page-title{
-    font-family:'Orbitron',monospace;font-weight:900;
-    font-size:clamp(1.8rem,4vw,3rem);
-    text-transform:uppercase;letter-spacing:0.04em;line-height:1.1;
-    margin-bottom:12px;
-  }
-  .page-title span{color:var(--gold);}
-  .page-updated{
-    font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;
-    color:rgba(200,204,214,0.4);text-transform:uppercase;margin-bottom:60px;
-  }
-
-  /* CONTENT */
-  .section-divider-line{
-    width:100%;height:1px;
-    background:linear-gradient(90deg,transparent,rgba(229,181,98,0.2) 30%,rgba(229,181,98,0.2) 70%,transparent);
-    margin:48px 0;
-  }
-  .content-section{margin-bottom:48px;}
-  .content-section h2{
-    font-family:'Orbitron',monospace;font-weight:700;
-    font-size:clamp(0.85rem,1.5vw,1rem);
-    letter-spacing:0.2em;text-transform:uppercase;
-    color:var(--gold);margin-bottom:18px;
-    display:flex;align-items:center;gap:12px;
-  }
-  .content-section h2::before{content:'//';font-family:'Share Tech Mono',monospace;opacity:0.5;}
-  .content-section p{
-    font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:400;
-    line-height:1.85;color:rgba(200,204,214,0.85);margin-bottom:14px;
-  }
-  .content-section p:last-child{margin-bottom:0;}
-  .content-section ul{
-    list-style:none;padding:0;margin:0 0 14px 0;
-  }
-  .content-section ul li{
-    font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:400;
-    line-height:1.85;color:rgba(200,204,214,0.85);
-    padding-left:20px;position:relative;margin-bottom:4px;
-  }
-  .content-section ul li::before{
-    content:'›';position:absolute;left:0;
-    color:var(--gold);font-size:1rem;line-height:1.85;
-  }
-
-  /* CLARITY HIGHLIGHT BOX */
-  .clarity-box{
-    border:1px solid rgba(229,181,98,0.25);
-    border-left:3px solid var(--gold);
-    background:rgba(229,181,98,0.04);
-    padding:28px 32px;
-    margin:24px 0;
-    position:relative;
-  }
-  .clarity-box::before{
-    content:'Microsoft Clarity';
-    font-family:'Share Tech Mono',monospace;font-size:0.55rem;
-    letter-spacing:0.25em;text-transform:uppercase;
-    color:rgba(229,181,98,0.5);
-    position:absolute;top:-9px;left:20px;
-    background:#000;padding:0 8px;
-  }
-  .clarity-box p{
-    font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:400;
-    line-height:1.85;color:rgba(200,204,214,0.8);margin-bottom:10px;
-  }
-  .clarity-box p:last-child{margin-bottom:0;}
-  .clarity-box a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(229,181,98,0.3);transition:border-color 0.2s;}
-  .clarity-box a:hover{border-color:var(--gold);}
-
-  /* CONTACT BOX */
-  .contact-box{
-    border:1px solid rgba(229,181,98,0.15);
-    background:rgba(229,181,98,0.03);
-    padding:32px;
-    margin-top:24px;
-  }
-  .contact-box p{
-    font-family:'Rajdhani',sans-serif;font-size:1.05rem;
-    line-height:1.85;color:rgba(200,204,214,0.85);margin-bottom:8px;
-  }
-  .contact-box a{color:var(--gold);text-decoration:none;}
-  .contact-box a:hover{text-decoration:underline;}
-  .contact-label{
-    font-family:'Share Tech Mono',monospace;font-size:0.58rem;
-    letter-spacing:0.2em;text-transform:uppercase;
-    color:rgba(229,181,98,0.55);display:block;margin-bottom:6px;
-  }
-
-  /* FOOTER */
-  footer{
-    position:relative;z-index:10;
-    border-top:1px solid rgba(229,181,98,0.08);
-    padding:32px 52px;
-    display:flex;align-items:center;justify-content:space-between;
-    flex-wrap:wrap;gap:16px;
-    background:rgba(0,0,0,0.85);
-  }
-  .footer-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:0.9rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);}
-  .footer-logo span{color:var(--gold);}
-  .footer-right{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
-  .footer-text{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;color:rgba(200,204,214,0.45);text-transform:uppercase;}
-  .footer-social{display:flex;align-items:center;gap:14px;}
-  .footer-social a{display:flex;opacity:0.5;transition:opacity 0.2s;}
-  .footer-social a:hover{opacity:1;}
-
-
-
-  @media(max-width:900px){
-    nav{padding:0 16px;height:60px;}
-    .nav-portal-desktop{display:none;}
-    .nav-cta-desktop{display:none;}
-    .nav-hamburger{display:flex;}
-    .nav-links{
-      display:none;
-      position:fixed;
-      top:60px;left:0;right:0;
-      background:rgba(0,0,0,0.98);
-      border-bottom:1px solid rgba(229,181,98,0.15);
-      flex-direction:column;gap:0;
-      padding:8px 0 16px;
-      z-index:299;
-    }
-    .nav-links.open{display:flex;}
-    .nav-links li a{display:block;padding:14px 24px;font-size:0.9rem;border-bottom:1px solid rgba(229,181,98,0.06);}
-    .nav-links li.nav-portal-mobile{display:list-item;}
-    .nav-right{gap:8px;}
-    .page-wrap{padding:90px 20px 60px;}
-    .clarity-box{padding:20px 18px;}
-    .contact-box{padding:20px 18px;}
-    footer{flex-direction:column;gap:12px;text-align:center;padding:24px 20px;}
-    .footer-right{justify-content:center;flex-direction:column;gap:10px;}
-  }
-</style>
-</head>
-<body>
-<div class="grid-bg"></div>
-<div class="vignette"></div>
-
-<nav aria-label="Päänavigaatio">
-  <a href="index.html" class="nav-logo">Verkko<span>Pantteri</span></a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html#meista">Meistä</a></li>
-    <li><a href="index.html#prosessi">Prosessi</a></li>
-    <li><a href="palvelut.html">Palvelut</a></li>
-    <li><a href="kasvulaskuri.html">Kasvulaskuri</a></li>
-    <li><a href="tyopaikka.html">Töihin</a></li>
-    <li><a href="automation.html" class="nav-automation-link">Automaatio</a></li>
-    <li class="nav-portal-mobile" style="display:none;"><a href="login.html" class="portal-link">Portaali</a></li>
-  </ul>
-  <div class="nav-right">
-    <div class="lang-switcher">
-      <button class="lang-btn active" id="lang-fi" onclick="setLang('fi')" title="Suomi"><img src="images/flag-fin.avif" alt="Suomi" width="22" height="15" loading="lazy"></button>
-      <button class="lang-btn" id="lang-en" onclick="setLang('en')" title="English"><img src="images/flag-en.avif" alt="English" width="22" height="15" loading="lazy"></button>
-    </div>
-    <button class="nav-hamburger" id="navHamburger" aria-label="Avaa valikko" onclick="toggleNav()"><span></span><span></span><span></span></button>
-    <a class="nav-portal nav-portal-desktop" href="login.html">Portaali</a>
-    <a href="index.html#yhteystiedot" class="nav-cta nav-cta-desktop">Ota yhteyttä</a>
-  </div>
-</nav>
-
-<main style="position:relative;z-index:10;">
-  <div class="page-wrap">
-
-    <div class="page-eyebrow" id="page-eyebrow">Tietosuoja</div>
-    <h1 class="page-title" id="page-title">Tietosuoja<span>seloste</span></h1>
-    <p class="page-updated" id="page-updated">Päivitetty: toukokuu 2025</p>
-
-    <div class="content-section">
-      <h2 id="s1-h">Rekisterinpitäjä</h2>
-      <p>Verkkopantteri<br>Tampere, Suomi<br>Sähköposti: <a href="mailto:hello@verkkopantteri.fi" style="color:var(--gold);text-decoration:none;">hello@verkkopantteri.fi</a></p>
-    </div>
-
-    <div class="section-divider-line"></div>
-
-    <div class="content-section">
-      <h2 id="s2-h">Mitä tietoja keräämme</h2>
-      <p id="s2-p">Keräämme tietoja, joita tarvitsemme palvelujemme tarjoamiseen ja verkkosivujemme kehittämiseen. Tiedot voivat sisältää:</p>
-      <ul id="s2-ul">
-        <li>Yhteydenottolomakkeen kautta annetut tiedot (nimi, yritys, sähköposti, puhelinnumero)</li>
-        <li>Evästeiden ja seurantateknologioiden avulla kerätyt käyttäytymistiedot</li>
-        <li>Istuntotiedot ja sivuston käyttöä koskevat tilastot</li>
-        <li>Kalenterivarauksen yhteydessä annetut tiedot</li>
-      </ul>
-    </div>
-
-    <div class="section-divider-line"></div>
-
-    <div class="content-section">
-      <h2 id="s3-h">Evästeet</h2>
-      <p id="s3-p1">Käytämme verkkosivuillamme ensimmäisen osapuolen ja kolmannen osapuolen evästeitä sekä muita seurantateknologioita. Evästeet auttavat meitä analysoimaan sivuston käyttöä, parantamaan käyttökokemusta sekä markkinoimaan palveluitamme.</p>
-      <p id="s3-p2">Voit hallita evästeasetuksiasi selaimesi asetuksissa. Huomioithan, että evästeiden poistaminen käytöstä saattaa vaikuttaa sivuston toiminnallisuuteen.</p>
-    </div>
-
-    <div class="section-divider-line"></div>
-
-    <div class="content-section">
-      <h2 id="s4-h">Microsoft Clarity -analytiikka</h2>
-      <div class="clarity-box">
-        <p id="s4-p1">Teemme yhteistyötä Microsoftin kanssa (Microsoft Clarity ja Microsoft Advertising) kerätäksemme tietoa siitä, miten käytät ja olet vuorovaikutuksessa verkkosivustomme kanssa. Tähän kuuluvat käyttäytymistiedot, lämpökartat ja istuntojen tallennus, joiden avulla parannamme ja markkinoimme tuotteitamme ja palveluitamme.</p>
-        <p id="s4-p2">Verkkosivuston käyttötietoja kerätään ensimmäisen ja kolmannen osapuolen evästeiden sekä muiden seurantateknologioiden avulla, jotta voidaan selvittää tuotteiden ja palveluiden suosiota sekä verkon käyttöä. Lisäksi käytämme näitä tietoja sivuston optimointiin, petosten ja tietoturvan hallintaan sekä mainontaan.</p>
-        <p id="s4-p3">Lisätietoja siitä, miten Microsoft kerää ja käyttää tietojasi, löydät <a href="https://www.microsoft.com/privacy/privacystatement" target="_blank" rel="noopener noreferrer">Microsoftin tietosuojailmoituksesta</a>.</p>
-      </div>
-    </div>
-
-    <div class="section-divider-line"></div>
-
-    <div class="content-section">
-      <h2 id="s5-h">Google Analytics</h2>
-      <p id="s5-p">Käytämme Google Analytics -palvelua sivuston kävijätilastojen seurantaan. Google Analytics kerää anonyymejä tietoja sivuston käytöstä evästeiden avulla. Tiedot käsitellään Googlen palvelimilla. Lisätietoja Googlen tietosuojakäytännöistä löydät osoitteesta <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:none;">policies.google.com/privacy</a>.</p>
-    </div>
-
-    <div class="section-divider-line"></div>
-
-    <div class="content-section">
-      <h2 id="s6-h">Tietojen käyttötarkoitus</h2>
-      <p id="s6-p">Käytämme keräämiämme tietoja seuraaviin tarkoituksiin:</p>
-      <ul id="s6-ul">
-        <li>Yhteydenottopyyntöihin vastaaminen ja tarjousten toimittaminen</li>
-        <li>Palvelujemme kehittäminen ja parantaminen</li>
-        <li>Verkkosivuston analytiikka ja käyttäjäkokemuksen optimointi</li>
-        <li>Markkinointiviestintä (vain suostumuksella)</li>
-        <li>Lainmukaisten velvoitteiden täyttäminen</li>
-      </ul>
-    </div>
-
-    <div class="section-divider-line"></div>
-
-    <div class="content-section">
-      <h2 id="s7-h">Tietojen säilytysaika</h2>
-      <p id="s7-p">Säilytämme henkilötietoja niin kauan kuin se on tarpeen tässä selosteessa kuvattuihin tarkoituksiin tai lain edellyttämällä tavalla. Yhteydenottolomakkeen tiedot poistetaan 24 kuukauden kuluessa yhteydenoton käsittelystä.</p>
-    </div>
-
-    <div class="section-divider-line"></div>
-
-    <div class="content-section">
-      <h2 id="s8-h">Rekisteröidyn oikeudet</h2>
-      <p id="s8-p">EU:n yleisen tietosuoja-asetuksen (GDPR) mukaisesti sinulla on oikeus:</p>
-      <ul id="s8-ul">
-        <li>Saada tietoa henkilötietojesi käsittelystä (tarkastusoikeus)</li>
-        <li>Vaatia virheellisten tietojen oikaisemista</li>
-        <li>Vaatia tietojesi poistamista ("oikeus tulla unohdetuksi")</li>
-        <li>Vastustaa tietojesi käsittelyä</li>
-        <li>Siirtää tietosi toiselle rekisterinpitäjälle (tietojen siirrettävyys)</li>
-        <li>Peruuttaa antamasi suostumus milloin tahansa</li>
-      </ul>
-    </div>
-
-    <div class="section-divider-line"></div>
-
-    <div class="content-section">
-      <h2 id="s9-h">Ota yhteyttä</h2>
-      <p id="s9-p">Mikäli sinulla on kysyttävää tietosuojastamme tai haluat käyttää oikeuksiasi, ota meihin yhteyttä:</p>
-      <div class="contact-box">
-        <span class="contact-label" id="s9-label">Rekisterinpitäjä</span>
-        <p id="s9-addr">Verkkopantteri — Tampere, Suomi</p>
-        <p>Sähköposti: <a href="mailto:hello@verkkopantteri.fi">hello@verkkopantteri.fi</a></p>
-      </div>
-      <p style="margin-top:18px;" id="s9-dpa">Sinulla on myös oikeus tehdä valitus tietosuojaviranomaiselle. Suomessa valvova viranomainen on <a href="https://tietosuoja.fi" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:none;">Tietosuojavaltuutetun toimisto</a>.</p>
-    </div>
-
-  </div>
-</main>
-
-<footer role="contentinfo">
-  <div class="footer-logo">Verkko<span>Pantteri</span></div>
-  <a href="tietosuoja.html" style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:rgba(200,204,214,0.4);text-decoration:none;text-transform:uppercase;" rel="noopener">Tietosuoja</a>
-  <div class="footer-right">
-    <div class="footer-text" id="footer-text">© 2025 Verkkopantteri — Digimarkkinoinnin peto</div>
-    <div class="footer-social">
-      <a href="https://www.tiktok.com/@verkkopantteri" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAACAAH/8QALBAAAgEDAwIFBAIDAAAAAAAAAQIDBAUGAAcRIZEICUJRcRIjMaMTQWFiof/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwAw7Sbd5Hufl6YzjMdOaowtPLLUSFIoYlIBdyATxyyjoCeSOmkZavA9fJIlN13At1LJ6lprc84HwWdOe2ry07fHJkuZ3UrzJT0dLTq3sJHkYj9Q7aa9RVUtO8SVFTDC0z/REruFLt7Lz+T/AIGgFF18D18jiY2rcC3VUnpWptzwA/JV347aOe7e3eR7YZe+M5NHTiqEKzxS08heKeJiQHQkA8cqw6gHkHppr+DDMtwa/CLLashxm4XGzVTVclHkprklAVZZOY5lY/XyJFZVPsV6cDnWaeZZb448mwy6heJKijqqdm9xG8bAftPfQXlp3COPJsztRb7lRR0tQq+4jeRSf2jvrRtzmhxrxF1+YZ3hWRZVb0oaVsPe30r1MVJUR9ZEKKeFlaQBlYj8f8Fu0m4mR7YZemTYzJTiqELQSxVEZeKeJiCUcAg8cqp6EHkDrpGWrxw3yOJRddv7dVSepqa4vAD8BkfjvoEj4XMYu+H7EY1YL9TGluUMc008BPWL+WeSUKf9grgEf0edG7zLLhHJk2GWoN9yno6qoZfYSPGoP6j21XXxw3ySJhatv7dSyelqm4vOB8hUTnvo57t7iZHufl75Nk0lOaowrBFFTxlIoIlJIRASTxyzHqSeSeug/9k=" alt="TikTok" width="18" height="18"></a>
-      <a href="https://x.com/verkkopantteri" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAACAcACf/EACsQAAEDBAAEBgIDAQAAAAAAAAECAwQFBgcRABIhkQgJMUJRoyNxFCQzgf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwAw4kx3ceT7vRbNstxzKLKn3XZDhQ0y0kgFayATrakjoBNkdOEZSvA9XHGUmq5Ap0Vz3JjU5b6R/wBUtG+3G8tOntuXLedVKfyR4cWOlXwHFuKI+oduKjfuXcvWrlmp22q2bYl0yO2ahTo6RITNqsFJ/II6+YtqfQnZUggHodBQ1sJdVfA9XG2VGlZAp0pz2pk05bCT+yla9duDnlvHdx4wu9ds3M3HEoMpfadjuFbT7SiQFoJAOtpUOoB2D046N4dyZOyfW6pVaJSAxY0ZtLEOfJCkSZkvYLnKjeg2kHl69Sr0PqAcPMsp7bdzWZVQnTkiHKjqV8htbagPtPfgN5adQbbua86UVfkkQ4shKfsNrcST+o78PN72tf8AauU52ScbU6BX01qKzGrlDlShGW8pkFLTzTp6UqCT6SFctb999PPrEmRLjxhd6LmtlyOJQZUw61IbK2n2lEEoWAQdbSk8iDsDnxRlK8cNcbaSKrj+nSnPkqNUVsA/wKQvXfgHmyLVv+6sqQsk5Jp0CgJosR6NQ6HFlCSthTw9Lrzro6VKKekBPLWvbXUDeZZUG3LmsylBW3I8OVIUn6Di0JB/I9uNVfHDXHGlClY/p0Vz4qk1Fb4H9CUI334nPLeRLjyfd67muZyOZRZSw01HbKGmGkkkIQCSdbUo8yTsnnwH/9k=" alt="X" width="18" height="18"></a>
-      <a href="https://www.instagram.com/verkkopantteri/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABwgACf/EACkQAAEDBAAEBwEBAQAAAAAAAAECAwQFBgcRACEikQgJEjFCUaNxI4H/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AmHEmO7jyfd6LZtluOZRZU+67IcKGmWkkArWQCdbUkcgTsjlxRlK8D1ccZSarkCnRXPkmNTlvpH/VLRvtxvLTp7bly3nVSnbkeHFjpV9BxbiiPyHbh5ve6b/urKk7G2NqjAoCaLEZk1yuyookrZU8PU0y00rpUop6iVctb9tdQA1V8D1cbZUaVkCnSnPimTTlsJP9KVr124nPLeO7jxhd67ZuZuOJQZS+07HcK2n2lEgLQSAdbSocwDsHlxbVcpVy1u86ThrMlbcq8SpqNWoFfoyRT3n3ooKnGHm07SNJV6un26SDvRSY+ZZT227msyqhOnJEOVHUr7Da21Afqe/Aby06g23c150oq/0kQ4shKfsNrcST+o78PN72tf8AauU52ScbU6BX01qKzGrlDlShGW8pkFLTzTp6UqCT6SFctb999PPrEmRLjxhd6LmtlyOJQZUw61IbK2n2lEEoWAQdbSk8iDsDnxRlK8cNcbaSKrj+nSnPkqNUVsA/wKQvXfgHmyLVv+6sqQsk5Jp0CgJosR6NQ6HFlCSthTw9Lrzro6VKKekBPLWvbXUDeZZUG3LmsylBW3I8OVIUn6Di0JB/I9uNVfHDXHGlClY/p0Vz4qk1Fb4H9CUI334nPLeRLjyfd67muZyOZRZSw01HbKGmGkkkIQCSdbUo8yTsnnwH/9k=" alt="Instagram" width="18" height="18"></a>
-    </div>
-  </div>
-</footer>
-
-
-<script>
-var VP_T = {
-  fi: {
-    navLinks: ['Meistä','Prosessi','Palvelut','Kasvulaskuri','Töihin','Automaatio'],
-    portal: 'Portaali', cta: 'Ota yhteyttä',
-    pageEye: 'Tietosuoja',
-    pageTitle: 'Tietosuoja<span>seloste</span>',
-    pageUpdated: 'Päivitetty: toukokuu 2025',
-    s1h: 'Rekisterinpitäjä',
-    s2h: 'Mitä tietoja keräämme',
-    s2p: 'Keräämme tietoja, joita tarvitsemme palvelujemme tarjoamiseen ja verkkosivujemme kehittämiseen. Tiedot voivat sisältää:',
-    s2ul: ['Yhteydenottolomakkeen kautta annetut tiedot (nimi, yritys, sähköposti, puhelinnumero)','Evästeiden ja seurantateknologioiden avulla kerätyt käyttäytymistiedot','Istuntotiedot ja sivuston käyttöä koskevat tilastot','Kalenterivarauksen yhteydessä annetut tiedot'],
-    s3h: 'Evästeet',
-    s3p1: 'Käytämme verkkosivuillamme ensimmäisen osapuolen ja kolmannen osapuolen evästeitä sekä muita seurantateknologioita. Evästeet auttavat meitä analysoimaan sivuston käyttöä, parantamaan käyttökokemusta sekä markkinoimaan palveluitamme.',
-    s3p2: 'Voit hallita evästeasetuksiasi selaimesi asetuksissa. Huomioithan, että evästeiden poistaminen käytöstä saattaa vaikuttaa sivuston toiminnallisuuteen.',
-    s4h: 'Microsoft Clarity -analytiikka',
-    s4p1: 'Teemme yhteistyötä Microsoftin kanssa (Microsoft Clarity ja Microsoft Advertising) kerätäksemme tietoa siitä, miten käytät ja olet vuorovaikutuksessa verkkosivustomme kanssa. Tähän kuuluvat käyttäytymistiedot, lämpökartat ja istuntojen tallennus, joiden avulla parannamme ja markkinoimme tuotteitamme ja palveluitamme.',
-    s4p2: 'Verkkosivuston käyttötietoja kerätään ensimmäisen ja kolmannen osapuolen evästeiden sekä muiden seurantateknologioiden avulla, jotta voidaan selvittää tuotteiden ja palveluiden suosiota sekä verkon käyttöä. Lisäksi käytämme näitä tietoja sivuston optimointiin, petosten ja tietoturvan hallintaan sekä mainontaan.',
-    s4p3: 'Lisätietoja siitä, miten Microsoft kerää ja käyttää tietojasi, löydät <a href="https://www.microsoft.com/privacy/privacystatement" target="_blank" rel="noopener noreferrer">Microsoftin tietosuojailmoituksesta</a>.',
-    s5h: 'Google Analytics',
-    s5p: 'Käytämme Google Analytics -palvelua sivuston kävijätilastojen seurantaan. Google Analytics kerää anonyymejä tietoja sivuston käytöstä evästeiden avulla. Tiedot käsitellään Googlen palvelimilla. Lisätietoja Googlen tietosuojakäytännöistä löydät osoitteesta <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:none;">policies.google.com/privacy</a>.',
-    s6h: 'Tietojen käyttötarkoitus',
-    s6p: 'Käytämme keräämiämme tietoja seuraaviin tarkoituksiin:',
-    s6ul: ['Yhteydenottopyyntöihin vastaaminen ja tarjousten toimittaminen','Palvelujemme kehittäminen ja parantaminen','Verkkosivuston analytiikka ja käyttäjäkokemuksen optimointi','Markkinointiviestintä (vain suostumuksella)','Lainmukaisten velvoitteiden täyttäminen'],
-    s7h: 'Tietojen säilytysaika',
-    s7p: 'Säilytämme henkilötietoja niin kauan kuin se on tarpeen tässä selosteessa kuvattuihin tarkoituksiin tai lain edellyttämällä tavalla. Yhteydenottolomakkeen tiedot poistetaan 24 kuukauden kuluessa yhteydenoton käsittelystä.',
-    s8h: 'Rekisteröidyn oikeudet',
-    s8p: 'EU:n yleisen tietosuoja-asetuksen (GDPR) mukaisesti sinulla on oikeus:',
-    s8ul: ['Saada tietoa henkilötietojesi käsittelystä (tarkastusoikeus)','Vaatia virheellisten tietojen oikaisemista','Vaatia tietojesi poistamista ("oikeus tulla unohdetuksi")','Vastustaa tietojesi käsittelyä','Siirtää tietosi toiselle rekisterinpitäjälle (tietojen siirrettävyys)','Peruuttaa antamasi suostumus milloin tahansa'],
-    s9h: 'Ota yhteyttä',
-    s9p: 'Mikäli sinulla on kysyttävää tietosuojastamme tai haluat käyttää oikeuksiasi, ota meihin yhteyttä:',
-    s9label: 'Rekisterinpitäjä',
-    s9addr: 'Verkkopantteri — Tampere, Suomi',
-    s9dpa: 'Sinulla on myös oikeus tehdä valitus tietosuojaviranomaiselle. Suomessa valvova viranomainen on <a href="https://tietosuoja.fi" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:none;">Tietosuojavaltuutetun toimisto</a>.',
-    footerText: '© 2025 Verkkopantteri — Digimarkkinoinnin peto'
-  },
-  en: {
-    navLinks: ['About','Process','Services','Growth Calc','Join Us','Automation'],
-    portal: 'Portal', cta: 'Contact',
-    pageEye: 'Privacy Policy',
-    pageTitle: 'Privacy<span> Policy</span>',
-    pageUpdated: 'Updated: May 2025',
-    s1h: 'Data Controller',
-    s2h: 'What data we collect',
-    s2p: 'We collect data that we need to provide our services and develop our website. This may include:',
-    s2ul: ['Information submitted via the contact form (name, company, email, phone number)','Behavioural data collected via cookies and tracking technologies','Session data and website usage statistics','Information provided when booking a consultation'],
-    s3h: 'Cookies',
-    s3p1: 'We use first-party and third-party cookies as well as other tracking technologies on our website. Cookies help us analyse site usage, improve user experience and market our services.',
-    s3p2: 'You can manage your cookie preferences in your browser settings. Please note that disabling cookies may affect the functionality of the website.',
-    s4h: 'Microsoft Clarity Analytics',
-    s4p1: 'We partner with Microsoft (Microsoft Clarity and Microsoft Advertising) to capture how you use and interact with our website. This includes behavioural data, heatmaps and session recordings that help us improve and market our products and services.',
-    s4p2: 'Website usage data is captured using first and third-party cookies and other tracking technologies to determine the popularity of products and services and online activity. In addition, we use this information for site optimisation, fraud and security purposes and advertising.',
-    s4p3: 'For more information about how Microsoft collects and uses your data, visit the <a href="https://www.microsoft.com/privacy/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement</a>.',
-    s5h: 'Google Analytics',
-    s5p: 'We use Google Analytics to track website visitor statistics. Google Analytics collects anonymous data about site usage via cookies. Data is processed on Google\'s servers. For more information about Google\'s privacy practices, visit <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:none;">policies.google.com/privacy</a>.',
-    s6h: 'Purpose of data processing',
-    s6p: 'We use the data we collect for the following purposes:',
-    s6ul: ['Responding to enquiries and delivering proposals','Developing and improving our services','Website analytics and user experience optimisation','Marketing communications (with consent only)','Fulfilling legal obligations'],
-    s7h: 'Data retention',
-    s7p: 'We retain personal data for as long as necessary for the purposes described in this policy or as required by law. Contact form data is deleted within 24 months of the enquiry being handled.',
-    s8h: 'Your rights',
-    s8p: 'Under the EU General Data Protection Regulation (GDPR), you have the right to:',
-    s8ul: ['Access information about the processing of your personal data (right of access)','Request correction of inaccurate data','Request deletion of your data ("right to be forgotten")','Object to the processing of your data','Transfer your data to another controller (data portability)','Withdraw your consent at any time'],
-    s9h: 'Contact us',
-    s9p: 'If you have questions about our privacy practices or wish to exercise your rights, please contact us:',
-    s9label: 'Data Controller',
-    s9addr: 'Verkkopantteri — Tampere, Finland',
-    s9dpa: 'You also have the right to lodge a complaint with a supervisory authority. In Finland, the supervisory authority is the <a href="https://tietosuoja.fi" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:none;">Office of the Data Protection Ombudsman</a>.',
-    footerText: '© 2025 Verkkopantteri — The beast of digital marketing'
-  }
-};
-
-function setLang(lang) {
-  localStorage.setItem('vp_lang', lang);
-  document.documentElement.lang = lang === 'en' ? 'en' : 'fi';
-  document.getElementById('lang-fi').classList.toggle('active', lang === 'fi');
-  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-  var T = VP_T[lang], el;
-
-  // Nav
-  document.querySelectorAll('.nav-links li:not(.nav-portal-mobile) a:not(.portal-link)').forEach(function(a,i){ if(T.navLinks[i]) a.textContent = T.navLinks[i]; });
-  document.querySelectorAll('.nav-portal, .portal-link').forEach(function(e){ e.textContent = T.portal; });
-  el = document.querySelector('.nav-cta-desktop'); if(el) el.textContent = T.cta;
-
-  // Page header
-  el = document.getElementById('page-eyebrow'); if(el) el.textContent = T.pageEye;
-  el = document.getElementById('page-title'); if(el) el.innerHTML = T.pageTitle;
-  el = document.getElementById('page-updated'); if(el) el.textContent = T.pageUpdated;
-
-  // Sections — headings
-  var heads = {s1:'s1-h',s2:'s2-h',s3:'s3-h',s4:'s4-h',s5:'s5-h',s6:'s6-h',s7:'s7-h',s8:'s8-h',s9:'s9-h'};
-  ['s1','s2','s3','s4','s5','s6','s7','s8','s9'].forEach(function(k){
-    el = document.getElementById(k+'-h'); if(el) el.textContent = T[k+'h'];
-  });
-
-  // Paragraphs
-  el = document.getElementById('s2-p'); if(el) el.textContent = T.s2p;
-  el = document.getElementById('s3-p1'); if(el) el.textContent = T.s3p1;
-  el = document.getElementById('s3-p2'); if(el) el.textContent = T.s3p2;
-  el = document.getElementById('s4-p1'); if(el) el.textContent = T.s4p1;
-  el = document.getElementById('s4-p2'); if(el) el.textContent = T.s4p2;
-  el = document.getElementById('s4-p3'); if(el) el.innerHTML = T.s4p3;
-  el = document.getElementById('s5-p'); if(el) el.innerHTML = T.s5p;
-  el = document.getElementById('s6-p'); if(el) el.textContent = T.s6p;
-  el = document.getElementById('s7-p'); if(el) el.textContent = T.s7p;
-  el = document.getElementById('s8-p'); if(el) el.textContent = T.s8p;
-  el = document.getElementById('s9-p'); if(el) el.textContent = T.s9p;
-  el = document.getElementById('s9-label'); if(el) el.textContent = T.s9label;
-  el = document.getElementById('s9-addr'); if(el) el.textContent = T.s9addr;
-  el = document.getElementById('s9-dpa'); if(el) el.innerHTML = T.s9dpa;
-
-  // Lists
-  function setList(id, items) {
-    var ul = document.getElementById(id);
-    if(!ul) return;
-    var lis = ul.querySelectorAll('li');
-    lis.forEach(function(li, i){ if(items[i] !== undefined) li.textContent = items[i]; });
-  }
-  setList('s2-ul', T.s2ul);
-  setList('s6-ul', T.s6ul);
-  setList('s8-ul', T.s8ul);
-
-  // Footer
-  el = document.getElementById('footer-text'); if(el) el.textContent = T.footerText;
-
-  // Page title tag
-  document.title = lang === 'en' ? 'Privacy Policy – Verkkopantteri' : 'Tietosuojaseloste – Verkkopantteri';
-}
-
-function toggleNav(){
-  var h=document.getElementById('navHamburger'), l=document.getElementById('navLinks');
-  h.classList.toggle('open'); l.classList.toggle('open');
-}
-document.querySelectorAll('.nav-links a').forEach(function(a){
-  a.addEventListener('click',function(){
-    document.getElementById('navHamburger').classList.remove('open');
-    document.getElementById('navLinks').classList.remove('open');
-  });
-});
-(function(){
-  function applyMobileLayout(){
-    var isMobile = window.innerWidth <= 900;
-    var p = document.querySelector('.nav-portal-mobile');
-    if(p) p.style.display = isMobile ? 'list-item' : 'none';
-  }
-  applyMobileLayout();
-  window.addEventListener('resize', applyMobileLayout);
-})();
-
-(function(){
-  var params = new URLSearchParams(window.location.search);
-  var urlLang = params.get('lang');
-  if(urlLang === 'en' || urlLang === 'fi') localStorage.setItem('vp_lang', urlLang);
-  var lang = localStorage.getItem('vp_lang') || 'fi';
-  setLang(lang);
-})();
-</script>
-
-<script>
-(function injectCookieCSS(){
-  var s=document.createElement('style');
-  s.textContent=`
-  #vp-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9000;background:#E5B562;border-top:3px solid #b8893a;backdrop-filter:blur(24px);padding:20px 52px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;transform:translateY(110%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);}
-  #vp-cookie-banner.visible{transform:translateY(0);}
-  .vp-cookie-text{font-family:'Rajdhani',sans-serif;font-size:0.92rem;color:#000;line-height:1.6;max-width:640px;}
-  .vp-cookie-text strong{color:#000;}
-  .vp-cookie-btns{display:flex;gap:10px;flex-shrink:0;}
-  .vp-cookie-accept{font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#E5B562;background:#000;border:none;padding:11px 28px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background 0.2s,transform 0.2s;}
-  .vp-cookie-accept:hover{background:#1a1a1a;transform:translateY(-1px);}
-  .vp-cookie-settings{font-family:'Orbitron',monospace;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#000;background:none;border:1px solid rgba(0,0,0,0.3);padding:11px 28px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:border-color 0.2s,color 0.2s,background 0.2s;}
-  .vp-cookie-settings:hover{border-color:#000;background:rgba(0,0,0,0.08);color:#000;}
-  @media(max-width:900px){#vp-cookie-banner{padding:16px 20px;flex-direction:column;align-items:flex-start;}.vp-cookie-btns{width:100%;}}
-  #vp-cookie-popup{display:none;position:fixed;inset:0;z-index:9100;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;}
-  #vp-cookie-popup.open{display:flex;}
-  .vp-popup-box{background:#0a0a0a;border:1px solid rgba(229,181,98,0.25);padding:44px;max-width:480px;width:90%;position:relative;}
-  .vp-popup-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#E5B562,transparent);}
-  .vp-popup-title{font-family:'Orbitron',monospace;font-weight:900;font-size:0.95rem;letter-spacing:0.1em;text-transform:uppercase;color:#fff;margin-bottom:8px;}
-  .vp-popup-desc{font-family:'Rajdhani',sans-serif;font-size:0.92rem;color:rgba(200,204,214,0.65);line-height:1.6;margin-bottom:28px;}
-  .vp-popup-item{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border:1px solid rgba(229,181,98,0.1);background:rgba(229,181,98,0.02);margin-bottom:8px;transition:border-color 0.2s,background 0.2s;}
-  .vp-popup-item.active{border-color:rgba(229,181,98,0.3);background:rgba(229,181,98,0.06);}
-  .vp-popup-item-info{display:flex;flex-direction:column;gap:3px;}
-  .vp-popup-item-name{font-family:'Share Tech Mono',monospace;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#fff;}
-  .vp-popup-item-hint{font-family:'Rajdhani',sans-serif;font-size:0.82rem;color:rgba(200,204,214,0.5);}
-  .vp-toggle{position:relative;width:40px;height:22px;flex-shrink:0;cursor:pointer;}
-  .vp-toggle input{display:none;}
-  .vp-toggle-track{position:absolute;inset:0;background:rgba(255,255,255,0.1);border:1px solid rgba(229,181,98,0.2);border-radius:11px;transition:background 0.2s,border-color 0.2s;}
-  .vp-toggle input:checked + .vp-toggle-track{background:rgba(229,181,98,0.25);border-color:rgba(229,181,98,0.5);}
-  .vp-toggle-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;background:#8a8f99;border-radius:50%;transition:transform 0.2s,background 0.2s;}
-  .vp-toggle input:checked ~ .vp-toggle-thumb{transform:translateX(18px);background:#E5B562;}
-  .vp-popup-footer{margin-top:24px;display:flex;justify-content:flex-end;}
-  .vp-popup-save{font-family:'Orbitron',monospace;font-weight:700;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:#000;background:#E5B562;border:none;padding:13px 36px;cursor:pointer;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:background 0.2s,transform 0.2s;}
-  .vp-popup-save:hover{background:#f0c878;transform:translateY(-1px);}
-  .vp-popup-save.reject{background:transparent;color:#8a8f99;border:1px solid rgba(229,181,98,0.2);}
-  .vp-popup-save.reject:hover{border-color:rgba(229,181,98,0.5);color:#fff;background:transparent;transform:none;}
-  `;
-  document.head.appendChild(s);
-})();
-
-function vpBuildCookieBanner(){
-  var lang=localStorage.getItem('vp_lang')||'fi';
-  var T={
-    fi:{text:'Yksityisyytesi on meille tärkeää. Käytämme evästeitä sivuston toiminnan, kehittämisen ja analytiikan tueksi. Lisätietoja <a href="tietosuoja.html" style="color:#000;font-weight:700;text-decoration:underline;text-underline-offset:2px;">tietosuojaselosteessa</a>.',accept:'HYVÄKSY',settings:'MUUTA ASETUKSIA',popupTitle:'Evästeasetukset',popupDesc:'Voit valita, mitkä analytiikkatyökalut ovat käytössä. Välttämättömät toiminnalliset evästeet ovat aina päällä.',gaName:'Google Analytics',gaHint:'Kävijätilastot ja liikenneanalyysi',clarityName:'Microsoft Clarity',clarityHint:'Käytettävyys ja heatmap-analyysi',save:'TALLENNA',reject:'HYLKÄÄ'},
-    en:{text:'Your privacy matters to us. We use cookies to support site functionality, development and analytics. Read more in our <a href="tietosuoja.html" style="color:#000;font-weight:700;text-decoration:underline;text-underline-offset:2px;">privacy policy</a>.',accept:'ACCEPT',settings:'CHANGE SETTINGS',popupTitle:'Cookie Settings',popupDesc:'Choose which analytics tools are active. Essential functional cookies are always on.',gaName:'Google Analytics',gaHint:'Visitor stats and traffic analysis',clarityName:'Microsoft Clarity',clarityHint:'Usability and heatmap analysis',save:'SAVE',reject:'DECLINE'}
-  };
-  window._vpCookieT=T;
-  var b=document.createElement('div');
-  b.id='vp-cookie-banner';
-  b.innerHTML='<div class="vp-cookie-text">'+T[lang].text+'</div><div class="vp-cookie-btns"><button class="vp-cookie-accept" id="vp-accept-btn">'+T[lang].accept+'</button><button class="vp-cookie-settings" id="vp-settings-btn">'+T[lang].settings+'</button></div>';
-  document.body.appendChild(b);
-  var pop=document.createElement('div');
-  pop.id='vp-cookie-popup';
-  pop.innerHTML='<div class="vp-popup-box"><div class="vp-popup-title" id="vp-pt">'+T[lang].popupTitle+'</div><div class="vp-popup-desc" id="vp-pd">'+T[lang].popupDesc+'</div><div class="vp-popup-item" id="vp-ga-item"><div class="vp-popup-item-info"><div class="vp-popup-item-name" id="vp-ga-name">'+T[lang].gaName+'</div><div class="vp-popup-item-hint" id="vp-ga-hint">'+T[lang].gaHint+'</div></div><label class="vp-toggle"><input type="checkbox" id="vp-toggle-ga" checked><span class="vp-toggle-track"></span><span class="vp-toggle-thumb"></span></label></div><div class="vp-popup-item" id="vp-cl-item"><div class="vp-popup-item-info"><div class="vp-popup-item-name" id="vp-cl-name">'+T[lang].clarityName+'</div><div class="vp-popup-item-hint" id="vp-cl-hint">'+T[lang].clarityHint+'</div></div><label class="vp-toggle"><input type="checkbox" id="vp-toggle-cl" checked><span class="vp-toggle-track"></span><span class="vp-toggle-thumb"></span></label></div><div class="vp-popup-footer"><button class="vp-popup-save" id="vp-popup-save-btn">'+T[lang].save+'</button></div></div>';
-  document.body.appendChild(pop);
-  document.getElementById('vp-accept-btn').onclick=function(){vpCookieSave(true,true);};
-  document.getElementById('vp-settings-btn').onclick=function(){vpOpenPopup();};
-  document.getElementById('vp-popup-save-btn').onclick=function(){
-    var ga=document.getElementById('vp-toggle-ga').checked;
-    var cl=document.getElementById('vp-toggle-cl').checked;
-    vpCookieSave(ga,cl);
-  };
-  pop.addEventListener('click',function(e){if(e.target===pop)vpClosePopup();});
-  function updateSaveBtn(){
-    var ga=document.getElementById('vp-toggle-ga').checked;
-    var cl=document.getElementById('vp-toggle-cl').checked;
-    var lang2=localStorage.getItem('vp_lang')||'fi';
-    var T2=window._vpCookieT[lang2];
-    var btn=document.getElementById('vp-popup-save-btn');
-    if(!ga&&!cl){btn.textContent=T2.reject;btn.className='vp-popup-save reject';}
-    else{btn.textContent=T2.save;btn.className='vp-popup-save';}
-    document.getElementById('vp-ga-item').className='vp-popup-item'+(ga?' active':'');
-    document.getElementById('vp-cl-item').className='vp-popup-item'+(cl?' active':'');
-  }
-  document.getElementById('vp-toggle-ga').onchange=updateSaveBtn;
-  document.getElementById('vp-toggle-cl').onchange=updateSaveBtn;
-  updateSaveBtn();
-}
-
-function vpOpenPopup(){document.getElementById('vp-cookie-popup').classList.add('open');}
-function vpClosePopup(){document.getElementById('vp-cookie-popup').classList.remove('open');}
-
-function vpLoadClarity(){
-  if(window._clarityLoaded) return;
-  window._clarityLoaded=true;
-  (function(c,l,a,r,i,t,y){
-    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window,document,'clarity','script','wwcwfq22fw');
-}
-
-function vpCookieSave(ga,cl){
-  localStorage.setItem('vp_consent_ga',ga?'1':'0');
-  localStorage.setItem('vp_consent_cl',cl?'1':'0');
-  localStorage.setItem('vp_consent_set','1');
-  if(!ga) window['ga-disable-G-LJTN2CTE78']=true;
-  if(cl) vpLoadClarity();
-  var b=document.getElementById('vp-cookie-banner');
-  if(b) b.classList.remove('visible');
-  vpClosePopup();
-}
-
-function vpCookieInit(){
-  if(!document.getElementById('vp-cookie-banner')) vpBuildCookieBanner();
-  var set=localStorage.getItem('vp_consent_set');
-  if(!set){
-    setTimeout(function(){
-      var b=document.getElementById('vp-cookie-banner');
-      if(b){b.style.display='flex';b.classList.add('visible');}
-    },900);
-  } else {
-    if(localStorage.getItem('vp_consent_ga')==='0') window['ga-disable-G-LJTN2CTE78']=true;
-    if(localStorage.getItem('vp_consent_cl')==='1') vpLoadClarity();
-  }
-}
-
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',vpCookieInit);
-} else {
-  vpCookieInit();
-}
-</script>
-
-
 <!-- AUTOMATION POPUP -->
 <style>
   #vp-wrap {
@@ -1304,18 +656,17 @@ if(document.readyState==='loading'){
     align-items: center;
     z-index: 9999;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 8px 36px rgba(30,50,140,0.38));
     transform: translateY(-50%) translateX(calc(100% + 10px));
   }
   #vp-wrap.visible {
     transform: translateY(-50%) translateX(0);
   }
   #vp-bubble {
-    background: rgba(5,6,15,0.97);
-    border: 1px solid rgba(0,229,255,0.28);
-    border-radius: 12px;
+    background: #ffffff;
+    border-radius: 14px;
     padding: 10px 8px 11px 13px;
-    width: 148px;
+    width: 132px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -1327,15 +678,7 @@ if(document.readyState==='loading'){
     transform-origin: right center;
     transition: opacity 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.18s,
                 transform 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.18s;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  }
-  #vp-bubble::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    border-radius: 12px 12px 0 0;
-    background: linear-gradient(90deg, transparent, rgba(0,229,255,0.15), rgba(123,79,255,0.15), transparent);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.13);
   }
   #vp-wrap.visible #vp-bubble {
     opacity: 1;
@@ -1351,24 +694,24 @@ if(document.readyState==='loading'){
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #00e5ff 0%, #7b4fff 100%);
+    background: linear-gradient(135deg, #1a3aaa 0%, #3B5EC6 60%, #6a8ef0 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 0 4px rgba(0,229,255,0.2);
+    box-shadow: 0 0 6px rgba(59,94,198,0.45);
   }
   #vp-bubble-avatar svg {
     width: 13px;
     height: 13px;
   }
   #vp-bubble-bot-label {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Orbitron', monospace;
     font-size: 7px;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #00e5ff;
+    color: #3B5EC6;
   }
   #vp-bubble-close {
     position: absolute;
@@ -1376,39 +719,39 @@ if(document.readyState==='loading'){
     right: 8px;
     width: 16px;
     height: 16px;
-    background: rgba(0,229,255,0.12);
-    border: 1px solid rgba(0,229,255,0.25);
+    background: #3B5EC6;
+    border: none;
     border-radius: 50%;
-    color: rgba(0,229,255,0.8);
+    color: #ffffff;
     font-size: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s, border-color 0.2s;
+    transition: background 0.2s;
     line-height: 1;
     padding: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
   }
   #vp-bubble-close:hover {
-    background: rgba(0,229,255,0.22);
-    border-color: rgba(0,229,255,0.6);
+    background: #2a4ab5;
   }
   #vp-bubble-text {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    font-weight: 400;
-    line-height: 1.55;
-    color: rgba(255,255,255,0.82);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #0a0a0a;
     letter-spacing: 0.01em;
     cursor: pointer;
   }
   #vp-bubble-cta {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Orbitron', monospace;
     font-size: 8px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #00e5ff;
+    color: #3B5EC6;
     cursor: pointer;
   }
 </style>
@@ -1421,8 +764,8 @@ if(document.readyState==='loading'){
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="4" y="8" width="16" height="11" rx="3" fill="white" opacity="0.95"/>
           <rect x="9" y="4" width="6" height="5" rx="1.5" fill="white" opacity="0.95"/>
-          <circle cx="9" cy="13" r="1.5" fill="#00e5ff"/>
-          <circle cx="15" cy="13" r="1.5" fill="#00e5ff"/>
+          <circle cx="9" cy="13" r="1.5" fill="#3B5EC6"/>
+          <circle cx="15" cy="13" r="1.5" fill="#3B5EC6"/>
           <line x1="1.5" y1="11" x2="4" y2="11" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
           <line x1="20" y1="11" x2="22.5" y2="11" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
         </svg>
@@ -1477,7 +820,8 @@ if(document.readyState==='loading'){
       }, 8000);
     }
   });
+  // AUTOMATION ENDS
 </script>
-<!-- AUTOMATION ENDS -->
+
 </body>
 </html>
