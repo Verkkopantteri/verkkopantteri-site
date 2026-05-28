@@ -664,17 +664,18 @@ function setLang(lang) {
     align-items: center;
     z-index: 9999;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    filter: drop-shadow(0 8px 36px rgba(30,50,140,0.38));
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
     transform: translateY(-50%) translateX(calc(100% + 10px));
   }
   #vp-wrap.visible {
     transform: translateY(-50%) translateX(0);
   }
   #vp-bubble {
-    background: #ffffff;
-    border-radius: 14px;
+    background: rgba(5,6,15,0.97);
+    border: 1px solid rgba(0,229,255,0.28);
+    border-radius: 12px;
     padding: 10px 8px 11px 13px;
-    width: 132px;
+    width: 148px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -686,7 +687,15 @@ function setLang(lang) {
     transform-origin: right center;
     transition: opacity 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.18s,
                 transform 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.18s;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.13);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  #vp-bubble::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(90deg, transparent, rgba(0,229,255,0.15), rgba(123,79,255,0.15), transparent);
   }
   #vp-wrap.visible #vp-bubble {
     opacity: 1;
@@ -702,24 +711,24 @@ function setLang(lang) {
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #1a3aaa 0%, #3B5EC6 60%, #6a8ef0 100%);
+    background: linear-gradient(135deg, #00e5ff 0%, #7b4fff 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 0 6px rgba(59,94,198,0.45);
+    box-shadow: 0 0 4px rgba(0,229,255,0.2);
   }
   #vp-bubble-avatar svg {
     width: 13px;
     height: 13px;
   }
   #vp-bubble-bot-label {
-    font-family: 'Orbitron', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 7px;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #3B5EC6;
+    color: #00e5ff;
   }
   #vp-bubble-close {
     position: absolute;
@@ -727,39 +736,39 @@ function setLang(lang) {
     right: 8px;
     width: 16px;
     height: 16px;
-    background: #3B5EC6;
-    border: none;
+    background: rgba(0,229,255,0.12);
+    border: 1px solid rgba(0,229,255,0.25);
     border-radius: 50%;
-    color: #ffffff;
+    color: rgba(0,229,255,0.8);
     font-size: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
+    transition: background 0.2s, border-color 0.2s;
     line-height: 1;
     padding: 0;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
   }
   #vp-bubble-close:hover {
-    background: #2a4ab5;
+    background: rgba(0,229,255,0.22);
+    border-color: rgba(0,229,255,0.6);
   }
   #vp-bubble-text {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.5;
-    color: #0a0a0a;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.82);
     letter-spacing: 0.01em;
     cursor: pointer;
   }
   #vp-bubble-cta {
-    font-family: 'Orbitron', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 8px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #3B5EC6;
+    color: #00e5ff;
     cursor: pointer;
   }
 </style>
@@ -772,8 +781,8 @@ function setLang(lang) {
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="4" y="8" width="16" height="11" rx="3" fill="white" opacity="0.95"/>
           <rect x="9" y="4" width="6" height="5" rx="1.5" fill="white" opacity="0.95"/>
-          <circle cx="9" cy="13" r="1.5" fill="#3B5EC6"/>
-          <circle cx="15" cy="13" r="1.5" fill="#3B5EC6"/>
+          <circle cx="9" cy="13" r="1.5" fill="#00e5ff"/>
+          <circle cx="15" cy="13" r="1.5" fill="#00e5ff"/>
           <line x1="1.5" y1="11" x2="4" y2="11" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
           <line x1="20" y1="11" x2="22.5" y2="11" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
         </svg>
@@ -828,8 +837,8 @@ function setLang(lang) {
       }, 8000);
     }
   });
-  // AUTOMATION ENDS
 </script>
+<!-- AUTOMATION ENDS -->
 
 </body>
 </html>
