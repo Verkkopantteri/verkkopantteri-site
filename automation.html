@@ -173,9 +173,15 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 32px
 }
 
 @media(max-width:700px){
+  html,body{overflow:hidden !important;height:100%}
+  #page{height:100vh;overflow:hidden}
+  #canvas{padding:0 !important;overflow:hidden}
   .nav-title{display:none}
   #early-bar{padding:10px 16px}
   .center-inner{white-space:normal;padding:22px 20px}
+  /* node-5 ja node-4: reunat kiinni tekstissä */
+  #node-5,#node-4{white-space:nowrap;display:inline-block}
+  #node-4 .cta-split-email{white-space:nowrap}
 }
 </style>
 </head>
@@ -344,13 +350,15 @@ function init(){
       const cardW = Math.floor((W - mx*2 - pairGap) / 2);
       let y = my;
 
-      // 1. node-5 — kapeampi leveys, keskitetään px:nä
+      // 1. node-5 — leveys mukautuu sisältöön (fit-content), keskitetään
       const n5=document.getElementById('node-5');
       n5.style.display='';
       n5.style.transform='';
-      const n5W = Math.floor(cardW * 0.75);
-      n5.style.setProperty('width', n5W+'px', 'important');
+      n5.style.setProperty('width', 'max-content', 'important');
       n5.style.top=y+'px';
+      n5.style.left='0px'; // temp, recalc after render
+      // force reflow to get actual width
+      const n5W = n5.offsetWidth;
       n5.style.left=Math.round(W/2 - n5W/2)+'px';
       y += n5.offsetHeight + gap;
 
@@ -376,13 +384,14 @@ function init(){
       const n3=place('node-3', mx+cardW+pairGap, y, cardW);
       y += Math.max(n2.offsetHeight, n3.offsetHeight) + gap;
 
-      // 5. node-4 CTA — leveämpi, keskitetään px:nä
+      // 5. node-4 CTA — leveys mukautuu sisältöön (fit-content), keskitetään
       const n4=document.getElementById('node-4');
       n4.style.display='';
       n4.style.transform='';
-      const n4W = Math.floor(cardW * 1.15);
-      n4.style.setProperty('width', n4W+'px', 'important');
+      n4.style.setProperty('width', 'max-content', 'important');
       n4.style.top=y+'px';
+      n4.style.left='0px'; // temp
+      const n4W = n4.offsetWidth;
       n4.style.left=Math.round(W/2 - n4W/2)+'px';
       y += n4.offsetHeight + my;
 
@@ -392,6 +401,18 @@ function init(){
 
       totalH = y;
       inner.style.height = totalH+'px';
+
+      // Skaalaa koko canvas-inner sopimaan näyttöön ilman scrollausta
+      const navH = document.querySelector('nav').offsetHeight;
+      const barH = document.getElementById('early-bar').offsetHeight;
+      const availH = window.innerHeight - navH - barH;
+      const scale = Math.min(1, availH / totalH);
+      inner.style.transformOrigin = 'top center';
+      inner.style.transform = scale < 1 ? `scale(${scale})` : '';
+      // Kutista canvas-wrapper skaalatulle korkeudelle niin ei jää tyhjää
+      const canvas = document.getElementById('canvas');
+      canvas.style.height = Math.ceil(totalH * scale) + 'px';
+      canvas.style.alignItems = 'flex-start';
 
       // SVG sized to full mobile height
       svg.setAttribute('viewBox',`0 0 ${W} ${totalH}`);
