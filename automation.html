@@ -343,8 +343,13 @@ function init(){
       const cardW = Math.floor((W - mx*2 - pairGap) / 2);
       let y = my;
 
-      // 1. node-5 top center
-      const n5=place('node-5', W/2-cardW/2, y, cardW);
+      // 1. node-5 — luetaan todellinen leveys CSS !important jälkeen, lasketaan tarkka px
+      const n5=document.getElementById('node-5');
+      n5.style.display='';
+      n5.style.transform='';
+      n5.style.left='0';
+      n5.style.top=y+'px';
+      n5.style.left=Math.round(W/2 - n5.offsetWidth/2)+'px';
       y += n5.offsetHeight + gap;
 
       // 2. node-0 + node-1 side by side
@@ -369,8 +374,13 @@ function init(){
       const n3=place('node-3', mx+cardW+pairGap, y, cardW);
       y += Math.max(n2.offsetHeight, n3.offsetHeight) + gap;
 
-      // 5. node-4 CTA bottom center
-      const n4=place('node-4', W/2-cardW/2, y, cardW);
+      // 5. node-4 CTA — luetaan todellinen leveys, lasketaan tarkka px
+      const n4=document.getElementById('node-4');
+      n4.style.display='';
+      n4.style.transform='';
+      n4.style.left='0';
+      n4.style.top=y+'px';
+      n4.style.left=Math.round(W/2 - n4.offsetWidth/2)+'px';
       y += n4.offsetHeight + my;
 
       // hide mid nodes
@@ -407,7 +417,7 @@ function init(){
       wire(parseFloat(n2.style.left)+n2.offsetWidth/2, parseFloat(n2.style.top)+n2.offsetHeight/2, cx, cy, '#00ff9d', 0.8, false);
       // node-3 center → center-box right
       wire(parseFloat(n3.style.left)+n3.offsetWidth/2, parseFloat(n3.style.top)+n3.offsetHeight/2, cx, cy, '#ff6b9d', 0.9, false);
-      // node-4 (CTA bottom) → center-box bottom
+      // node-4 (CTA bottom) → center-box bottom — from node-4 top center
       wire(cx, parseFloat(n4.style.top), cx, cy, '#00e5ff', 1.0, true);
 
       // center dot
