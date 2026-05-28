@@ -343,13 +343,14 @@ function init(){
       const cardW = Math.floor((W - mx*2 - pairGap) / 2);
       let y = my;
 
-      // 1. node-5 — luetaan todellinen leveys CSS !important jälkeen, lasketaan tarkka px
+      // 1. node-5 — kapeampi leveys, keskitetään px:nä
       const n5=document.getElementById('node-5');
       n5.style.display='';
       n5.style.transform='';
-      n5.style.left='0';
+      const n5W = Math.floor(cardW * 0.75);
+      n5.style.setProperty('width', n5W+'px', 'important');
       n5.style.top=y+'px';
-      n5.style.left=Math.round(W/2 - n5.offsetWidth/2)+'px';
+      n5.style.left=Math.round(W/2 - n5W/2)+'px';
       y += n5.offsetHeight + gap;
 
       // 2. node-0 + node-1 side by side
@@ -374,13 +375,14 @@ function init(){
       const n3=place('node-3', mx+cardW+pairGap, y, cardW);
       y += Math.max(n2.offsetHeight, n3.offsetHeight) + gap;
 
-      // 5. node-4 CTA — luetaan todellinen leveys, lasketaan tarkka px
+      // 5. node-4 CTA — leveämpi, keskitetään px:nä
       const n4=document.getElementById('node-4');
       n4.style.display='';
       n4.style.transform='';
-      n4.style.left='0';
+      const n4W = Math.floor(cardW * 1.15);
+      n4.style.setProperty('width', n4W+'px', 'important');
       n4.style.top=y+'px';
-      n4.style.left=Math.round(W/2 - n4.offsetWidth/2)+'px';
+      n4.style.left=Math.round(W/2 - n4W/2)+'px';
       y += n4.offsetHeight + my;
 
       // hide mid nodes
